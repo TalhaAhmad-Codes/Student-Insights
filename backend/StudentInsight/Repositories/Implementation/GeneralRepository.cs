@@ -23,7 +23,7 @@ namespace StudentInsight.Repositories.Implementation
         // Add an entity to the database
         public async Task AddAsync(Entity entity)
         {
-            dbContext.Add(entity);
+            await dbSet.AddAsync(entity);
             await SaveChangesAsync();
         }
 
@@ -44,6 +44,9 @@ namespace StudentInsight.Repositories.Implementation
         // Get paged result items
         protected async Task<List<Entity>> GetPagedResultItemsAsync(IQueryable<Entity> query, int pageNumber, int pageSize)
         {
+            pageNumber = Math.Max(pageNumber, 1);
+            pageSize = Math.Max(pageSize, 1);
+
             return await query
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -58,6 +61,7 @@ namespace StudentInsight.Repositories.Implementation
         public async Task AddBulkAsync(List<Entity> entities)
         {
             await dbContext.BulkInsertAsync(entities);
+            await SaveChangesAsync();
         }
     }
 }

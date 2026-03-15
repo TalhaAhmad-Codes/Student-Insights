@@ -14,14 +14,14 @@ namespace StudentInsight.Repositories.Implementation
 
         public async Task<PagedResultDto<Department>> GetAllAsync(DepartmentFilterDto filterDto)
         {
-            var query = dbSet.AsQueryable();
+            var query = dbSet.AsNoTracking().AsQueryable();
 
             query = query.Where(d => d.CreatorUserId == filterDto.CreatorUserId);
 
             if (filterDto.Name != null)
                 query = query.Where(d => d.Name == Func.Trim(filterDto.Name, true));
 
-            var items = await GetPagedResultItemsAsync(query, filterDto.PageNumber, filterDto.PageSize);
+            var items = await GetPagedResultItemsAsync(query.OrderBy(d => d.Id), filterDto.PageNumber, filterDto.PageSize);
             var totalCount = await query.CountAsync();
 
             return new PagedResultDto<Department>

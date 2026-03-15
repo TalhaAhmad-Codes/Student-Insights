@@ -13,7 +13,7 @@ namespace StudentInsight.Repositories.Implementation
 
         public async Task<PagedResultDto<Exam>> GetAllAsync(ExamFilterDto filterDto)
         {
-            var query = dbSet.AsQueryable();
+            var query = dbSet.AsNoTracking().AsQueryable();
 
             query = query.Where(e => e.CreatorUserId == filterDto.CreatorUserId);
 
@@ -35,7 +35,7 @@ namespace StudentInsight.Repositories.Implementation
             if (filterDto.MaxTotalMarks.HasValue)
                 query = query.Where(e => e.TotalMarks <= filterDto.MaxTotalMarks);
 
-            var items = await GetPagedResultItemsAsync(query, filterDto.PageNumber, filterDto.PageSize);
+            var items = await GetPagedResultItemsAsync(query.OrderBy(e => e.Id), filterDto.PageNumber, filterDto.PageSize);
             var totalCount = await query.CountAsync();
 
             return new PagedResultDto<Exam>
