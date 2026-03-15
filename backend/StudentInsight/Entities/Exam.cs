@@ -10,7 +10,6 @@ namespace StudentInsight.Entities
         public ExamType Type { get; set; }
 
         [Required]
-        [Range(1, 100)]
         public int TotalMarks { get; set; }
 
         [Required]
@@ -21,7 +20,6 @@ namespace StudentInsight.Entities
         
         // Navigation
         public Department Department { get; set; }
-        public ICollection<Student> Students { get; set; }
         public ICollection<StudentExamLogs> StudentExamLogs { get; set; }
     }
 }

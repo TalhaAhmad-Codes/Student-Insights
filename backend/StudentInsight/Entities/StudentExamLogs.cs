@@ -7,7 +7,7 @@ namespace StudentInsight.Entities
     public sealed class StudentExamLogs : CreatorBaseEntity
     {
         [Required]
-        [Range(0, 100)]
+        [Range(0, int.MaxValue)]
         public int ObtainedMarks { get; set; }
 
         [Required]
