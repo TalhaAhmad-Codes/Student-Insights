@@ -12,7 +12,7 @@ namespace StudentInsight.Entities
         public string Username { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(150)]
         public string Email { get; set; }
 
         [Required]

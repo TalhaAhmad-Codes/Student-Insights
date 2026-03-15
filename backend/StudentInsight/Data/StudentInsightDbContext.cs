@@ -27,11 +27,13 @@ namespace StudentInsight.Data
                 // Username
                 builder.Property(u => u.Username)
                        .IsRequired()
+                       .HasMaxLength(50)
                        .HasColumnName("Username");
 
                 // Email
                 builder.Property(u => u.Email)
                        .IsRequired()
+                       .HasMaxLength(150)
                        .HasColumnName("Email");
 
                 builder.HasIndex(u => u.Email)
@@ -40,29 +42,7 @@ namespace StudentInsight.Data
                 // Password
                 builder.Property(u => u.PasswordHash)
                        .IsRequired()
-                       .HasColumnName("Password");
-
-                /* ----- Relations ----- */
-
-                // User <-> Students
-                builder.HasMany(u => u.Students)
-                       .WithOne(s => s.CreatorUser)
-                       .OnDelete(DeleteBehavior.Cascade);
-
-                // User <-> Departments
-                builder.HasMany(u => u.Departments)
-                       .WithOne(d => d.CreatorUser)
-                       .OnDelete(DeleteBehavior.Cascade);
-
-                // User <-> Exams
-                builder.HasMany(u => u.Exams)
-                       .WithOne(e => e.CreatorUser)
-                       .OnDelete(DeleteBehavior.Cascade);
-
-                // User <-> Student Exam Logs
-                builder.HasMany(u => u.StudentExamLogs)
-                       .WithOne(l => l.CreatorUser)
-                       .OnDelete(DeleteBehavior.Cascade);
+                       .HasColumnName("PasswordHash");
             });
 
             /*/ <----- Student - Configuration -----> /*/
@@ -71,11 +51,13 @@ namespace StudentInsight.Data
                 // Student Name
                 builder.Property(s => s.StudentName)
                        .IsRequired()
+                       .HasMaxLength(50)
                        .HasColumnName("Name");
 
                 // Father Name
                 builder.Property(s => s.FatherName)
                        .IsRequired()
+                       .HasMaxLength(50)
                        .HasColumnName("FatherName");
 
                 // Roll Number
@@ -83,10 +65,16 @@ namespace StudentInsight.Data
                        .IsRequired()
                        .HasColumnName("RollNumber");
 
+                builder.HasIndex(s => new { s.RollNumber, s.DepartmentId })
+                       .IsUnique();
+
                 // Date of Birth
                 builder.Property(s => s.DateOfBirth)
                        .IsRequired()
                        .HasColumnName("DOB");
+
+                // Department
+                builder.HasIndex(s => s.DepartmentId);
 
                 /* ----- Relations ----- */
 
@@ -101,11 +89,6 @@ namespace StudentInsight.Data
                        .WithMany(d => d.Students)
                        .HasForeignKey(s => s.DepartmentId)
                        .OnDelete(DeleteBehavior.Restrict);
-
-                // Students <-> Student Exams Logs
-                builder.HasMany(s => s.StudentExamLogs)
-                       .WithOne(l => l.Student)
-                       .OnDelete(DeleteBehavior.Cascade);
             });
 
             /*/ <----- Department - Configuration -----> /*/
@@ -114,9 +97,10 @@ namespace StudentInsight.Data
                 // Name
                 builder.Property(d => d.Name)
                        .IsRequired()
+                       .HasMaxLength(75)
                        .HasColumnName("Name");
 
-                builder.HasIndex(d => d.Name)
+                builder.HasIndex(d => new { d.Name, d.CreatorUserId })
                        .IsUnique();
 
                 /* ----- Relations ----- */
@@ -130,12 +114,7 @@ namespace StudentInsight.Data
                 // Department <-> Students
                 builder.HasMany(d => d.Students)
                        .WithOne(s => s.Department)
-                       .OnDelete(DeleteBehavior.Cascade);
-
-                // Department <-> Exams
-                builder.HasMany(d => d.Exams)
-                       .WithOne(e => e.Department)
-                       .OnDelete(DeleteBehavior.Cascade);
+                       .OnDelete(DeleteBehavior.Restrict);
             });
 
             /*/ <----- Exam - Configuration -----> /*/
@@ -169,11 +148,6 @@ namespace StudentInsight.Data
                        .WithMany(d => d.Exams)
                        .HasForeignKey(e => e.DepartmentId)
                        .OnDelete(DeleteBehavior.Restrict);
-
-                // Exam <-> Student Exams Logs
-                builder.HasMany(e => e.StudentExamLogs)
-                       .WithOne(l => l.Exam)
-                       .OnDelete(DeleteBehavior.Cascade);
             });
 
             /*/ <----- Student Exam Logs - Configuration -----> /*/
@@ -182,7 +156,7 @@ namespace StudentInsight.Data
                 // Obtained Marks
                 builder.Property(l => l.ObtainedMarks)
                        .IsRequired()
-                       .HasColumnName("Obtained Marks");
+                       .HasColumnName("ObtainedMarks");
 
                 // Status
                 builder.Property(l => l.Status)
@@ -191,7 +165,18 @@ namespace StudentInsight.Data
 
                 // Note
                 builder.Property(l => l.Note)
+                       .HasMaxLength(150)
                        .HasColumnName("Note");
+
+                // Prevent duplicate logs
+                builder.HasIndex(l => new { l.StudentId, l.ExamId })
+                       .IsUnique();
+
+                // Exam
+                builder.HasIndex(l => l.ExamId);
+
+                // Student
+                builder.HasIndex(l => l.StudentId);
 
                 /* ----- Relations ----- */
 
