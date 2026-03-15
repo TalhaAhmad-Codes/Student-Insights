@@ -22,5 +22,6 @@ namespace StudentInsight.Entities
         // Navigation
         public Department Department { get; set; }
         public ICollection<Student> Students { get; set; }
+        public StudentExamLogs StudentExamLogs { get; set; }
     }
 }
