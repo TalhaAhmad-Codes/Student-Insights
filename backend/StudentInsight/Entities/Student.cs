@@ -7,23 +7,24 @@ namespace StudentInsight.Entities
     {
         [Required]
         [MaxLength(50)]
-        public string Name { get; set; }
+        public string StudentName { get; set; }
 
         [Required]
-        public string RollNumber { get; set; }
+        [MaxLength(50)]
+        public string FatherName { get; set; }
+
+        [Required]
+        [Range(1, int.MaxValue)]
+        public int RollNumber { get; set; }
 
         [Required]
         public DateOnly DateOfBirth { get; set; }
-
-        [MaxLength(100)]
-        public string? Description { get; set; }
 
         // Foriegn Keys
         public Guid DepartmentId { get; set; }
 
         // Navigation
         public Department Department { get; set; }
-        public ICollection<Exam> Exams { get; set; }
         public ICollection<StudentExamLogs> StudentExamLogs { get; set; }
     }
 }
