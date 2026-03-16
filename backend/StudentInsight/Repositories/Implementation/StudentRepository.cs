@@ -21,14 +21,11 @@ namespace StudentInsight.Repositories.Implementation
             if (filterDto.DepartmentId.HasValue)
                 query = query.Where(s => s.DepartmentId == filterDto.DepartmentId);
 
-            if (filterDto.RollNumber.HasValue)
-                query = query.Where(s => s.RollNumber == filterDto.RollNumber);
+            if (filterDto.FromRollNumber.HasValue)
+                query = query.Where(s => s.RollNumber >= filterDto.FromRollNumber);
 
-            if (filterDto.StudentName != null)
-                query = query.Where(s => s.StudentName == Func.Trim(filterDto.StudentName, true));
-
-            if (filterDto.FatherName != null)
-                query = query.Where(s => s.FatherName == Func.Trim(filterDto.FatherName, true));
+            if (filterDto.ToRollNumber.HasValue)
+                query = query.Where(s => s.RollNumber <= filterDto.ToRollNumber);
 
             if (filterDto.DateOfBirth.HasValue)
                 query = query.Where(s => s.DateOfBirth == filterDto.DateOfBirth);

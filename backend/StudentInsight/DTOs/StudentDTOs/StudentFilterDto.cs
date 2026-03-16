@@ -4,9 +4,8 @@ namespace StudentInsight.DTOs.StudentDTOs
 {
     public sealed class StudentFilterDto : BaseCreatorFilterDto
     {
-        public string? StudentName { get; init; }
-        public string? FatherName { get; init; }
-        public int? RollNumber { get; init; }
+        public int? FromRollNumber { get; init; }
+        public int? ToRollNumber { get; init; }
         public DateOnly? DateOfBirth { get; init; }
         public Guid? DepartmentId { get; init; }
     }

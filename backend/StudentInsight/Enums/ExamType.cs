@@ -2,7 +2,7 @@
 {
     public enum ExamType
     {
-        Session = 0,
+        Sessional = 0,
         Mid,
         Final
     }

@@ -17,7 +17,7 @@ namespace StudentInsight.Repositories.Implementation
             var query = dbSet.AsNoTracking().AsQueryable();
 
             if (filterDto.Email != null)
-                query = query.Where(u => u.Email == Func.Trim(filterDto.Email));
+                query = query.Where(u => u.Email == filterDto.Email.Trim());
 
             var items = await GetPagedResultItemsAsync(query.OrderBy(u => u.Id), filterDto.PageNumber, filterDto.PageSize);
             var totalCount = await query.CountAsync();

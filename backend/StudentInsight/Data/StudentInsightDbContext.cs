@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentInsight.Entities;
+using StudentInsight.Validators.Length;
 
 namespace StudentInsight.Data
 {
@@ -27,13 +28,13 @@ namespace StudentInsight.Data
                 // Username
                 builder.Property(u => u.Username)
                        .IsRequired()
-                       .HasMaxLength(50)
+                       .HasMaxLength(MaxLength.Username)
                        .HasColumnName("Username");
 
                 // Email
                 builder.Property(u => u.Email)
                        .IsRequired()
-                       .HasMaxLength(150)
+                       .HasMaxLength(MaxLength.Email)
                        .HasColumnName("Email");
 
                 builder.HasIndex(u => u.Email)
@@ -51,13 +52,13 @@ namespace StudentInsight.Data
                 // Student Name
                 builder.Property(s => s.StudentName)
                        .IsRequired()
-                       .HasMaxLength(50)
+                       .HasMaxLength(MaxLength.PersonName)
                        .HasColumnName("Name");
 
                 // Father Name
                 builder.Property(s => s.FatherName)
                        .IsRequired()
-                       .HasMaxLength(50)
+                       .HasMaxLength(MaxLength.PersonName)
                        .HasColumnName("FatherName");
 
                 // Roll Number
@@ -97,7 +98,7 @@ namespace StudentInsight.Data
                 // Name
                 builder.Property(d => d.Name)
                        .IsRequired()
-                       .HasMaxLength(75)
+                       .HasMaxLength(MaxLength.DepartmentName)
                        .HasColumnName("Name");
 
                 builder.HasIndex(d => new { d.Name, d.CreatorUserId })
@@ -165,7 +166,7 @@ namespace StudentInsight.Data
 
                 // Note
                 builder.Property(l => l.Note)
-                       .HasMaxLength(150)
+                       .HasMaxLength(MaxLength.SELNote)
                        .HasColumnName("Note");
 
                 // Prevent duplicate logs

@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 namespace StudentInsight
 {
@@ -7,7 +9,12 @@ namespace StudentInsight
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // AutoMapper Registeration
+            builder.Services.AddAutoMapper(typeof(Program));
+
+            // Fluent Validation - Configurations
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

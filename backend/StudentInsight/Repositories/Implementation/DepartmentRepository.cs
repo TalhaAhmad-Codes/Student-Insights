@@ -19,7 +19,7 @@ namespace StudentInsight.Repositories.Implementation
             query = query.Where(d => d.CreatorUserId == filterDto.CreatorUserId);
 
             if (filterDto.Name != null)
-                query = query.Where(d => d.Name == Func.Trim(filterDto.Name, true));
+                query = query.Where(d => d.Name == filterDto.Name.Trim().ToLower());
 
             var items = await GetPagedResultItemsAsync(query.OrderBy(d => d.Id), filterDto.PageNumber, filterDto.PageSize);
             var totalCount = await query.CountAsync();
