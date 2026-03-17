@@ -49,7 +49,7 @@ namespace StudentInsight.Controllers
         public async Task<IActionResult> CreateBulkAsync(List<UserCreateDto> dtos)
         {
             await service.CreateBulkAsync(dtos);
-            return Ok($"All '{dtos.Count}' have been inserted successfully.");
+            return Ok($"All '{dtos.Count}' users have been inserted successfully.");
         }
 
         [HttpPost("login")]
