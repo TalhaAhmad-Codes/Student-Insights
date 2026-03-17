@@ -12,7 +12,7 @@ namespace StudentInsight.Validators.Departments
                 .NotEmpty();
 
             RuleFor(s => s.Name)
-                .Must(n => !string.IsNullOrWhiteSpace(n))
+                .NotEmpty()
                 .MaximumLength(MaxLength.DepartmentName)
                 .When(s => s.Name != null);
 

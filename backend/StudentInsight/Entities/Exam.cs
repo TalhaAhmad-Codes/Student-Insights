@@ -1,18 +1,12 @@
 ﻿using StudentInsight.Entities.Common;
 using StudentInsight.Enums;
-using System.ComponentModel.DataAnnotations;
 
 namespace StudentInsight.Entities
 {
     public sealed class Exam : CreatorBaseEntity
     {
-        [Required]
         public ExamType Type { get; set; }
-
-        [Required]
         public int TotalMarks { get; set; }
-
-        [Required]
         public DateOnly ConductedDate { get; set; }
 
         // Foreign Keys

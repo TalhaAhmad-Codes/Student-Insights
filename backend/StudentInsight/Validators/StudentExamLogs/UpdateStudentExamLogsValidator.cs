@@ -17,7 +17,7 @@ namespace StudentInsight.Validators.StudentExamLogs
                 .GreaterThan(0);
 
             RuleFor(l => l.Note)
-                .Must(n => !string.IsNullOrWhiteSpace(n))
+                .NotEmpty()
                 .When(l => l.Note != null);
 
             RuleFor(l => l.Status)

@@ -41,5 +41,22 @@ namespace StudentInsight.Repositories.Implementation
                 TotalCount = totalCount
             };
         }
+
+        public async Task<int> GetTotalMarks(Guid examId)
+        {
+            var exam = await dbContext.Exams.FindAsync(examId);
+
+            return exam is null ? 0 : exam.TotalMarks;
+        }
+
+        public async Task<bool> IsValidObtainedMarks(Guid logId, int totalMarks)
+        {
+            var log = await GetByIdAsync(logId);
+
+            if (log is null)
+                return false;
+
+            return log.ObtainedMarks <= totalMarks;
+        }
     }
 }

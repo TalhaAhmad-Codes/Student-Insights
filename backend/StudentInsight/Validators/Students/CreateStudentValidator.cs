@@ -12,11 +12,11 @@ namespace StudentInsight.Validators.Students
                 .NotEmpty();
 
             RuleFor(s => s.StudentName)
-                .Must(n => !string.IsNullOrWhiteSpace(n))
+                .NotEmpty()
                 .MaximumLength(MaxLength.PersonName);
 
             RuleFor(s => s.FatherName)
-                .Must(n => !string.IsNullOrWhiteSpace(n))
+                .NotEmpty()
                 .MaximumLength(MaxLength.PersonName);
 
             RuleFor(s => s.DepartmentId)

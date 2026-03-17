@@ -34,16 +34,23 @@ namespace StudentInsight.Validators.Users.UpdateUserValidators
                 .NotEmpty();
 
             RuleFor(u => u.OldPassword)
-                .Must(p => !string.IsNullOrWhiteSpace(p))
-                .MinimumLength(MinLength.Password);
+                .NotEmpty()
+                .MinimumLength(MinLength.Password)
+                .WithMessage($"Password length must be at least {MinLength.Password} characters.");
 
             RuleFor(u => u.NewPassword)
-                .Must(p => !string.IsNullOrWhiteSpace(p))
-                .MinimumLength(MinLength.Password);
+                .NotEmpty()
+                .MinimumLength(MinLength.Password)
+                .WithMessage($"Password length must be at least {MinLength.Password} characters.");
 
             RuleFor(u => u.ConfirmPassword)
-                .Must(p => !string.IsNullOrWhiteSpace(p))
-                .MinimumLength(MinLength.Password);
+                .NotEmpty()
+                .MinimumLength(MinLength.Password)
+                .WithMessage($"Password length must be at least {MinLength.Password} characters.");
+
+            RuleFor(u => u)
+                .Must(u => u.NewPassword == u.ConfirmPassword)
+                .WithMessage("Please confirm you password correctly.");
         }
     }
 }

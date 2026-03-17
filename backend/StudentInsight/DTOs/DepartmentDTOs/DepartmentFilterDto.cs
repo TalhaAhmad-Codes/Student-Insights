@@ -4,6 +4,11 @@ namespace StudentInsight.DTOs.DepartmentDTOs
 {
     public sealed class DepartmentFilterDto : BaseCreatorFilterDto
     {
-        public string? Name { get; init; }
+        private string? name;
+        public string? Name
+        {
+            get => name;
+            init => name = value?.Trim().ToLower();
+        }
     }
 }

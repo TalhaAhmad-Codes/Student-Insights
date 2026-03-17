@@ -3,7 +3,6 @@ using StudentInsight.Data;
 using StudentInsight.DTOs.Common;
 using StudentInsight.DTOs.UserDTOs;
 using StudentInsight.Entities;
-using StudentInsight.Helpers.Utils;
 using StudentInsight.Repositories.Interfaces;
 
 namespace StudentInsight.Repositories.Implementation
@@ -27,6 +26,16 @@ namespace StudentInsight.Repositories.Implementation
                 Items = items,
                 TotalCount = totalCount
             };
+        }
+
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            var result = await GetAllAsync(new()
+            {
+                Email = email
+            });
+
+            return result.TotalCount == 0 ? null : result.Items[0];
         }
     }
 }

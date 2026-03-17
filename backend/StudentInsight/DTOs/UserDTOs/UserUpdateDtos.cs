@@ -1,4 +1,5 @@
 ﻿using StudentInsight.DTOs.Common;
+using System.Runtime.CompilerServices;
 
 namespace StudentInsight.DTOs.UserDTOs.UserUpdateDtos
 {
@@ -9,7 +10,13 @@ namespace StudentInsight.DTOs.UserDTOs.UserUpdateDtos
 
     public sealed class UserUpdateUsernameDto : BaseDto
     {
-        public string Username { get; init; }
+        private string username;
+
+        public string Username
+        {
+            get => username;
+            init => username = value.Trim().ToLower();
+        }
     }
 
     public sealed class UserChangePasswordDto : BaseDto

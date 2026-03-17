@@ -1,19 +1,12 @@
 ﻿using StudentInsight.Entities.Common;
 using StudentInsight.Enums;
-using System.ComponentModel.DataAnnotations;
 
 namespace StudentInsight.Entities
 {
     public sealed class StudentExamLogs : CreatorBaseEntity
     {
-        [Required]
-        [Range(0, int.MaxValue)]
         public int ObtainedMarks { get; set; }
-
-        [Required]
         public ExamStatus Status { get; set; }
-
-        [MaxLength(150)]
         public string? Note { get; set; }
 
         // Foreign Keys

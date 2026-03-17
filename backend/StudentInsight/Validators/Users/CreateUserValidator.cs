@@ -9,7 +9,7 @@ namespace StudentInsight.Validators.Users
         public CreateUserValidator()
         {
             RuleFor(u => u.Username)
-                .Must(n => !string.IsNullOrWhiteSpace(n))
+                .NotEmpty()
                 .MaximumLength(MaxLength.Username);
 
             RuleFor(u => u.Email)
@@ -18,7 +18,7 @@ namespace StudentInsight.Validators.Users
                 .EmailAddress();
 
             RuleFor(u => u.Password)
-                .Must(p => !string.IsNullOrWhiteSpace(p))
+                .NotEmpty()
                 .MinimumLength(MinLength.Password);
         }
     }

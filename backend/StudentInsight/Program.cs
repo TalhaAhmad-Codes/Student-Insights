@@ -1,5 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using StudentInsight.Services.Implementation;
+using StudentInsight.Services.Interfaces;
 
 namespace StudentInsight
 {
@@ -15,6 +17,13 @@ namespace StudentInsight
             // Fluent Validation - Configurations
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+            // Services - Configs
+            builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+            builder.Services.AddScoped<IExamService, ExamService>();
+            builder.Services.AddScoped<IStudentExamLogsService, StudentExamLogsService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

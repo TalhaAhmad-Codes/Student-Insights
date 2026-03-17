@@ -4,6 +4,12 @@ namespace StudentInsight.DTOs.UserDTOs
 {
     public sealed class UserFilterDto : BaseFilterDto
     {
-        public string? Email { get; init; }
+        private string? email;
+
+        public string? Email
+        {
+            get => email;
+            init => email = value?.Trim().ToLower();
+        }
     }
 }

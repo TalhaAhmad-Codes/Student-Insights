@@ -1,5 +1,4 @@
 ﻿using StudentInsight.Entities.Common;
-using System.ComponentModel.DataAnnotations;
 
 namespace StudentInsight.Entities
 {
