@@ -15,7 +15,7 @@ namespace StudentInsight.DTOs.UserDTOs.UserUpdateDtos
         public string Username
         {
             get => username;
-            init => username = value.Trim().ToLower();
+            init => username = value.Trim();
         }
     }
 

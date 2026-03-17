@@ -9,7 +9,7 @@ namespace StudentInsight.DTOs.UserDTOs
         public string? Email
         {
             get => email;
-            init => email = value?.Trim().ToLower();
+            init => email = value?.Trim();
         }
     }
 }

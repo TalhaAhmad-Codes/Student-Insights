@@ -9,12 +9,12 @@
         public string Username
         {
             get => username;
-            init => username = value.Trim().ToLower();
+            init => username = value.Trim();
         }
         public string Email
         {
             get => email;
-            init => email = value.Trim().ToLower();
+            init => email = value.Trim();
         }
         public string Password { get; init; }
     }

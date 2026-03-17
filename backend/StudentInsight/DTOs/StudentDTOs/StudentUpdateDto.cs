@@ -10,12 +10,12 @@ namespace StudentInsight.DTOs.StudentDTOs
         public string StudentName
         {
             get => studentName;
-            init => studentName = value.Trim().ToLower();
+            init => studentName = value.Trim();
         }
         public string FatherName
         {
             get => fatherName;
-            init => fatherName = value.Trim().ToLower();
+            init => fatherName = value.Trim();
         }
         public int RollNumber { get; init; }
         public DateOnly DateOfBirth { get; init; }
