@@ -98,15 +98,7 @@ namespace StudentInsight.Services.Implementation
 
         public async Task<Guid> RegisterAsync(UserCreateDto dto)
         {
-            if (await DoesEmailExist(dto.Email))
-            {
-                throw new DomainException("Email is already registered. Try Login!");
-            }
-
-            var user = mapper.Map<User>(dto);
-
-            await repository.AddAsync(user);
-
+            var user = await CreateAsync(dto);
             return user.Id;
         }
 

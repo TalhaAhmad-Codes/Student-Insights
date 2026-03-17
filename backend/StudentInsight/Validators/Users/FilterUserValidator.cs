@@ -9,7 +9,8 @@ namespace StudentInsight.Validators.Users
         {
             RuleFor(u => u.Email)
                 .NotEmpty()
-                .EmailAddress();
+                .EmailAddress()
+                .When(u => u.Email != null);
 
             RuleFor(s => s.PageNumber)
                 .GreaterThan(0);
