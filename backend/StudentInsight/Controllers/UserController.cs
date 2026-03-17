@@ -31,7 +31,7 @@ namespace StudentInsight.Controllers
             return user is null ? NotFound() : Ok(user);
         }
 
-        [HttpGet("login")]
+        [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(UserLoginDto dto)
         {
             try
