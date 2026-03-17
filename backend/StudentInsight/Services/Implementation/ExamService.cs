@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using StudentInsight.DTOs.Common;
+﻿using StudentInsight.DTOs.Common;
 using StudentInsight.DTOs.ExamDTOs;
-using StudentInsight.Entities;
+using StudentInsight.Mappers;
 using StudentInsight.Repositories.Interfaces;
 using StudentInsight.Services.Interfaces;
 
@@ -10,20 +9,23 @@ namespace StudentInsight.Services.Implementation
     public sealed class ExamService : IExamService
     {
         private readonly IExamRepository repository;
-        private readonly IMapper mapper;
 
-        public ExamService(IExamRepository repository, IMapper mapper)
+        public ExamService(IExamRepository repository)
         {
             this.repository = repository;
-            this.mapper = mapper;
         }
 
         public async Task<ExamResponseDto> CreateAsync(ExamCreateDto dto)
         {
-            var exam = mapper.Map<Exam>(dto);
+            var exam = ExamMapper.ToEntity(dto);
 
             await repository.AddAsync(exam);
-            return mapper.Map<ExamResponseDto>(exam);
+            return ExamMapper.ToDto(exam);
+        }
+
+        public async Task CreateBulkAsync(List<ExamCreateDto> dtos)
+        {
+            await repository.AddBulkAsync(dtos.Select(ExamMapper.ToEntity).ToList());
         }
 
         public async Task<PagedResultDto<ExamResponseDto>> GetAllAsync(ExamFilterDto filterDto)
@@ -32,7 +34,7 @@ namespace StudentInsight.Services.Implementation
 
             return new PagedResultDto<ExamResponseDto>
             {
-                Items = mapper.Map<List<ExamResponseDto>>(result.Items),
+                Items = result.Items.Select(ExamMapper.ToDto).ToList(),
                 TotalCount = result.TotalCount
             };
         }
@@ -41,7 +43,7 @@ namespace StudentInsight.Services.Implementation
         {
             var exam = await repository.GetByIdAsync(id);
 
-            return exam is null ? null : mapper.Map<ExamResponseDto>(exam);
+            return exam is null ? null : ExamMapper.ToDto(exam);
         }
 
         public async Task<bool> RemoveAsync(Guid id)

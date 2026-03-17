@@ -9,6 +9,7 @@ namespace StudentInsight.Services.Interfaces
         Task<PagedResultDto<RDto>> GetAllAsync(FDto filterDto);
 
         Task<RDto> CreateAsync(CDto dto);
+        Task CreateBulkAsync(List<CDto> dtos);
         Task<bool> RemoveAsync(Guid id);
     }
 

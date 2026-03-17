@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using StudentInsight.DTOs.Common;
+﻿using StudentInsight.DTOs.Common;
 using StudentInsight.DTOs.StudentDTOs;
-using StudentInsight.Entities;
+using StudentInsight.Mappers;
 using StudentInsight.Repositories.Interfaces;
 using StudentInsight.Services.Interfaces;
 
@@ -10,20 +9,23 @@ namespace StudentInsight.Services.Implementation
     public sealed class StudentService : IStudentService
     {
         private readonly IStudentRepository repository;
-        private readonly IMapper mapper;
 
-        public StudentService(IStudentRepository repository, IMapper mapper)
+        public StudentService(IStudentRepository repository)
         {
             this.repository = repository;
-            this.mapper = mapper;
         }
 
         public async Task<StudentResponseDto> CreateAsync(StudentCreateDto dto)
         {
-            var student = mapper.Map<Student>(dto);
+            var student = StudentMapper.ToEntity(dto);
             
             await repository.AddAsync(student);
-            return mapper.Map<StudentResponseDto>(student);
+            return StudentMapper.ToDto(student);
+        }
+
+        public async Task CreateBulkAsync(List<StudentCreateDto> dtos)
+        {
+            await repository.AddBulkAsync(dtos.Select(StudentMapper.ToEntity).ToList());
         }
 
         public async Task<PagedResultDto<StudentResponseDto>> GetAllAsync(StudentFilterDto filterDto)
@@ -32,7 +34,7 @@ namespace StudentInsight.Services.Implementation
 
             return new PagedResultDto<StudentResponseDto>
             {
-                Items = mapper.Map<List<StudentResponseDto>>(result.Items),
+                Items = result.Items.Select(StudentMapper.ToDto).ToList(),
                 TotalCount = result.TotalCount
             };
         }
@@ -41,7 +43,7 @@ namespace StudentInsight.Services.Implementation
         {
             var student = await repository.GetByIdAsync(id);
 
-            return student is null ? null : mapper.Map<StudentResponseDto?>(student);
+            return student is null ? null : StudentMapper.ToDto(student);
         }
 
         public async Task<bool> RemoveAsync(Guid id)

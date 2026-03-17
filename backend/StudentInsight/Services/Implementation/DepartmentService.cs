@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using StudentInsight.DTOs.Common;
+﻿using StudentInsight.DTOs.Common;
 using StudentInsight.DTOs.DepartmentDTOs;
-using StudentInsight.Entities;
+using StudentInsight.Mappers;
 using StudentInsight.Repositories.Interfaces;
 using StudentInsight.Services.Interfaces;
 
@@ -10,20 +9,23 @@ namespace StudentInsight.Services.Implementation
     public sealed class DepartmentService : IDepartmentService
     {
         private readonly IDepartmentRepository repository;
-        private readonly IMapper mapper;
 
-        public DepartmentService(IDepartmentRepository repository, IMapper mapper)
+        public DepartmentService(IDepartmentRepository repository)
         {
             this.repository = repository;
-            this.mapper = mapper;
         }
 
         public async Task<DepartmentResponseDto> CreateAsync(DepartmentCreateDto dto)
         {
-            var deparment = mapper.Map<Department>(dto);
+            var deparment = DepartmentMapper.ToEntity(dto);
 
             await repository.AddAsync(deparment);
-            return mapper.Map<DepartmentResponseDto>(deparment);
+            return DepartmentMapper.ToDto(deparment);
+        }
+
+        public async Task CreateBulkAsync(List<DepartmentCreateDto> dtos)
+        {
+            await repository.AddBulkAsync(dtos.Select(DepartmentMapper.ToEntity).ToList());
         }
 
         public async Task<PagedResultDto<DepartmentResponseDto>> GetAllAsync(DepartmentFilterDto filterDto)
@@ -32,7 +34,7 @@ namespace StudentInsight.Services.Implementation
 
             return new PagedResultDto<DepartmentResponseDto>
             {
-                Items = mapper.Map<List<DepartmentResponseDto>>(result.Items),
+                Items = result.Items.Select(DepartmentMapper.ToDto).ToList(),
                 TotalCount = result.TotalCount
             };
         }
@@ -40,7 +42,7 @@ namespace StudentInsight.Services.Implementation
         public async Task<DepartmentResponseDto?> GetByIdAsync(Guid id)
         {
             var department = await repository.GetByIdAsync(id);
-            return department is null ? null : mapper.Map<DepartmentResponseDto>(department);
+            return department is null ? null : DepartmentMapper.ToDto(department);
         }
 
         public async Task<bool> RemoveAsync(Guid id)

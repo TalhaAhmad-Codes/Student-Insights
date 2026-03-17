@@ -15,9 +15,6 @@ namespace StudentInsight
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // AutoMapper Registeration
-            builder.Services.AddAutoMapper(typeof(Program));
-
             // Fluent Validation - Configurations
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();

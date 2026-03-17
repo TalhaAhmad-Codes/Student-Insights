@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using StudentInsight.DTOs.Common;
+﻿using StudentInsight.DTOs.Common;
 using StudentInsight.DTOs.StudentExamLogsDTOs;
-using StudentInsight.Entities;
 using StudentInsight.Exceptions;
+using StudentInsight.Mappers;
 using StudentInsight.Repositories.Interfaces;
 using StudentInsight.Services.Interfaces;
 
@@ -11,27 +10,36 @@ namespace StudentInsight.Services.Implementation
     public sealed class StudentExamLogsService : IStudentExamLogsService
     {
         private readonly IStudentExamLogsRepository repository;
-        private readonly IMapper mapper;
 
-        public StudentExamLogsService(IStudentExamLogsRepository repository, IMapper mapper)
+        public StudentExamLogsService(IStudentExamLogsRepository repository)
         {
             this.repository = repository;
-            this.mapper = mapper;
         }
 
-        public async Task<StudentExamLogsResponseDto> CreateAsync(StudentExamLogsCreateDto dto)
+        private async void AgainstInValidObtainedMarks(Guid logId, Guid examId)
         {
-            var log = mapper.Map<StudentExamLogs>(dto);
-            int totalMarks = await repository.GetTotalMarks(log.ExamId);
-            bool valid = await repository.IsValidObtainedMarks(log.Id, totalMarks);
+            int totalMarks = await repository.GetTotalMarks(examId);
+            bool valid = await repository.IsValidObtainedMarks(logId, totalMarks);
 
             if (!valid)
             {
                 throw new DomainException($"Obtained marks cannot exceed '{totalMarks}'");
             }
+        }
+
+        public async Task<StudentExamLogsResponseDto> CreateAsync(StudentExamLogsCreateDto dto)
+        {
+            var log = StudentExamLogsMapper.ToEntity(dto);
+
+            AgainstInValidObtainedMarks(log.Id, log.ExamId);
 
             await repository.AddAsync(log);
-            return mapper.Map<StudentExamLogsResponseDto>(log);
+            return StudentExamLogsMapper.ToDto(log);
+        }
+
+        public async Task CreateBulkAsync(List<StudentExamLogsCreateDto> dtos)
+        {
+            await repository.AddBulkAsync(dtos.Select(StudentExamLogsMapper.ToEntity).ToList());
         }
 
         public async Task<PagedResultDto<StudentExamLogsResponseDto>> GetAllAsync(StudentExamLogsFilterDto filterDto)
@@ -40,7 +48,7 @@ namespace StudentInsight.Services.Implementation
 
             return new PagedResultDto<StudentExamLogsResponseDto>
             {
-                Items = mapper.Map<List<StudentExamLogsResponseDto>>(result.Items),
+                Items = result.Items.Select(StudentExamLogsMapper.ToDto).ToList(),
                 TotalCount = result.TotalCount
             };
         }
@@ -49,7 +57,7 @@ namespace StudentInsight.Services.Implementation
         {
             var log = await repository.GetByIdAsync(id);
 
-            return log is null ? null : mapper.Map<StudentExamLogsResponseDto>(log);
+            return log is null ? null : StudentExamLogsMapper.ToDto(log);
         }
 
         public async Task<bool> RemoveAsync(Guid id)
@@ -70,10 +78,12 @@ namespace StudentInsight.Services.Implementation
             if (log is null)
                 return false;
 
-            log.ObtainedMarks = dto.ObtainedMarks;
             log.Status = dto.Status;
             log.ExamId = dto.ExamId;
             log.StudentId = dto.StudentId;
+            log.ObtainedMarks = dto.ObtainedMarks;
+            
+            AgainstInValidObtainedMarks(log.Id, log.ExamId);
 
             await repository.UpdateAsync(log);
             return true;

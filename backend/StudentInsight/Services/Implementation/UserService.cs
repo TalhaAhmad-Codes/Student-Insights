@@ -1,10 +1,9 @@
-﻿using AutoMapper;
-using StudentInsight.DTOs.Common;
+﻿using StudentInsight.DTOs.Common;
 using StudentInsight.DTOs.UserDTOs;
 using StudentInsight.DTOs.UserDTOs.UserUpdateDtos;
-using StudentInsight.Entities;
 using StudentInsight.Exceptions;
 using StudentInsight.Helpers.Utils;
+using StudentInsight.Mappers;
 using StudentInsight.Repositories.Interfaces;
 using StudentInsight.Services.Interfaces;
 
@@ -13,12 +12,10 @@ namespace StudentInsight.Services.Implementation
     public sealed class UserService : IUserService
     {
         private readonly IUserRepository repository;
-        private readonly IMapper mapper;
 
-        public UserService(IUserRepository repository, IMapper mapper)
+        public UserService(IUserRepository repository)
         {
             this.repository = repository;
-            this.mapper = mapper;
         }
 
         private async Task<bool> DoesEmailExist(string email)
@@ -52,12 +49,10 @@ namespace StudentInsight.Services.Implementation
                 throw new DomainException("Email is already registered. Try Login!");
             }
 
-            var user = mapper.Map<User>(dto);
-
-            user.PasswordHash = PasswordHasher.Hash(dto.Password);
+            var user = UserMapper.ToEntity(dto);
 
             await repository.AddAsync(user);
-            return mapper.Map<UserResponseDto>(user);
+            return UserMapper.ToDto(user);
         }
 
         public async Task<PagedResultDto<UserResponseDto>> GetAllAsync(UserFilterDto filterDto)
@@ -65,7 +60,7 @@ namespace StudentInsight.Services.Implementation
             var result = await repository.GetAllAsync(filterDto);
             return new PagedResultDto<UserResponseDto>
             {
-                Items = mapper.Map<List<UserResponseDto>>(result.Items),
+                Items = result.Items.Select(UserMapper.ToDto).ToList(),
                 TotalCount = result.TotalCount
             };
         }
@@ -74,7 +69,7 @@ namespace StudentInsight.Services.Implementation
         {
             var user = await repository.GetByIdAsync(id);
 
-            return user is null ? null : mapper.Map<UserResponseDto>(user);
+            return user is null ? null : UserMapper.ToDto(user);
         }
 
         public async Task<Guid> LoginAsync(UserLoginDto dto)
@@ -138,6 +133,11 @@ namespace StudentInsight.Services.Implementation
             user.Username = dto.Username;
             await repository.UpdateAsync(user);
             return true;
+        }
+
+        public async Task CreateBulkAsync(List<UserCreateDto> dtos)
+        {
+            await repository.AddBulkAsync(dtos.Select(UserMapper.ToEntity).ToList());
         }
     }
 }

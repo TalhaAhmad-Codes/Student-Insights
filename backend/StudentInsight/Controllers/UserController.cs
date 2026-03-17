@@ -31,20 +31,6 @@ namespace StudentInsight.Controllers
             return user is null ? NotFound() : Ok(user);
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync(UserLoginDto dto)
-        {
-            try
-            {
-                var id = await service.LoginAsync(dto);
-                return Ok(id);
-            }
-            catch (DomainException e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreateAsync(UserCreateDto dto)
         {
@@ -52,6 +38,27 @@ namespace StudentInsight.Controllers
             {
                 var user = await service.CreateAsync(dto);
                 return Ok(user);
+            }
+            catch (DomainException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("bulk")]
+        public async Task<IActionResult> CreateBulkAsync(List<UserCreateDto> dtos)
+        {
+            await service.CreateBulkAsync(dtos);
+            return Ok($"All '{dtos.Count}' have been inserted successfully.");
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAsync(UserLoginDto dto)
+        {
+            try
+            {
+                var id = await service.LoginAsync(dto);
+                return Ok(id);
             }
             catch (DomainException e)
             {
