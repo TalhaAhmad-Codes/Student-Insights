@@ -37,11 +37,11 @@ namespace StudentInsight.ViewModels.Authentication
                 Password = password
             };
 
-            try
-            {
-                var response = await apiService.PostAsync<LoginRequest, AuthenticationRespone>("User/login", request);
+            //try
+            //{
+                var id = await apiService.PostAsync<LoginRequest, Guid>("User/login", request);
 
-                SessionService.Instance.SetUser(response.UserId);   // Set the Guid for current session
+                SessionService.Instance.SetUser(id);   // Set the Guid for current session
 
                 // On Success
                 var mainWindow = new MainWindow();
@@ -52,11 +52,11 @@ namespace StudentInsight.ViewModels.Authentication
                     .OfType<AuthWindow>()
                     .Single(w => w is AuthWindow)
                     .Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void GoToRegister(object obj)

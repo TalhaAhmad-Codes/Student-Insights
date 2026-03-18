@@ -42,9 +42,9 @@ namespace StudentInsight.ViewModels.Authentication
 
             try
             {
-                var response = await apiService.PostAsync<RegisterRequest, AuthenticationRespone>("User/register", request);
+                var id = await apiService.PostAsync<RegisterRequest, Guid>("User/register", request);
 
-                SessionService.Instance.SetUser(response.UserId);
+                SessionService.Instance.SetUser(id);
 
                 MessageBox.Show("Registration successful!");
             }
