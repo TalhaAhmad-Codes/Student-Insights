@@ -60,6 +60,11 @@
 
                 <Separator Margin="10" Background="#3B82F6"/>
 
+                <!-- AI Services -->
+                <Button Content="AI Service"
+                        Margin="10"
+                        Style="{StaticResource SidebarButtonStyle}"/>
+
                 <!-- Account Settings -->
                 <Button Content="Account Settings"
                         Margin="10"
