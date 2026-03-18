@@ -6,6 +6,7 @@ using StudentInsight.Repositories.Implementation;
 using StudentInsight.Repositories.Interfaces;
 using StudentInsight.Services.Implementation;
 using StudentInsight.Services.Interfaces;
+using Supabase;
 
 namespace StudentInsight
 {
@@ -19,11 +20,24 @@ namespace StudentInsight
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
+            // Supabase - Configuration
+            //builder.Services.AddScoped<Supabase.Client>(_ =>
+            //    new Supabase.Client(
+            //        builder.Configuration["SupabaseURL"],
+            //        builder.Configuration["SupabaseKey"],
+            //        new SupabaseOptions
+            //        {
+            //            AutoRefreshToken = true,
+            //            AutoConnectRealtime = true
+            //        }));
+
             // Database Connection
+            //builder.Services.AddDbContext<StudentInsightDbContext>(options =>
+            //    options.UseSqlServer(
+            //        builder.Configuration.GetConnectionString("DefaultConnection")
+            //    ));
             builder.Services.AddDbContext<StudentInsightDbContext>(options =>
-                options.UseSqlServer(
-                    builder.Configuration.GetConnectionString("DefaultConnection")
-                ));
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Repositories - Configs
             builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -48,6 +62,12 @@ namespace StudentInsight
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<StudentInsightDbContext>();
+                db.Database.Migrate();
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
