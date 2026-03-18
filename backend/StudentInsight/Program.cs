@@ -25,6 +25,7 @@ namespace StudentInsight
                     builder.Configuration.GetConnectionString("DefaultConnection")
                 ));
 
+
             // Repositories - Configs
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();

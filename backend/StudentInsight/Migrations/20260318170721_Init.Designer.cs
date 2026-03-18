@@ -12,7 +12,7 @@ using StudentInsight.Data;
 namespace StudentInsight.Migrations
 {
     [DbContext(typeof(StudentInsightDbContext))]
-    [Migration("20260317110603_Init")]
+    [Migration("20260318170721_Init")]
     partial class Init
     {
         /// <inheritdoc />
