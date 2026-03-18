@@ -1,4 +1,6 @@
 ﻿using StudentInsight.Helpers;
+using StudentInsight.Models.Authentication;
+using StudentInsight.Services;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,6 +10,7 @@ namespace StudentInsight.ViewModels.Authentication
     public class RegisterViewModel
     {
         private readonly AuthViewModel viewModel;
+        public readonly ApiService apiService;
 
         public string Username { get; set; }
         public string Email { get; set; }
@@ -19,18 +22,36 @@ namespace StudentInsight.ViewModels.Authentication
         public RegisterViewModel(AuthViewModel viewModel)
         {
             this.viewModel = viewModel;
+            apiService = new();
 
-            RegisterCommand = new RelayCommand(ExecuteRegister);
+            RegisterCommand = new RelayCommand(async (p) => await ExecuteRegister(p));
             GoToLoginCommand = new RelayCommand(_ => viewModel.ShowLogin());
         }
 
-        private void ExecuteRegister(object parameter)
+        private async Task ExecuteRegister(object parameter)
         {
             var passwordBox = parameter as PasswordBox;
             string password = passwordBox!.Password;
 
-            // TODO: API call
-            MessageBox.Show($"Register:\n{Username}\n{Email}\n{Password}");
+            RegisterRequest request = new()
+            {
+                Username = Username,
+                Email = Email,
+                Password = password
+            };
+
+            try
+            {
+                var response = await apiService.PostAsync<RegisterRequest, AuthenticationRespone>("User/register", request);
+
+                SessionService.Instance.SetUser(response.UserId);
+
+                MessageBox.Show("Registration successful!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void GoToLogin(object obj)

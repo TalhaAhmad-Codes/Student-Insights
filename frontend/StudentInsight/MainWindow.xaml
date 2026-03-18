@@ -75,7 +75,7 @@
 
         <!-- ================= Main Content ================= -->
         <Grid Grid.Column="1" Background="White">
-            <TextBlock Text="Welcome to Student Insight"
+            <TextBlock Text="{Binding UserId}"
                        FontSize="26"
                        FontWeight="SemiBold"
                        Foreground="#1E3A8A"

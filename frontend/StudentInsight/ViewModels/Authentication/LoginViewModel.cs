@@ -1,4 +1,6 @@
 ﻿using StudentInsight.Helpers;
+using StudentInsight.Models.Authentication;
+using StudentInsight.Services;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,6 +10,7 @@ namespace StudentInsight.ViewModels.Authentication
     public class LoginViewModel
     {
         private readonly AuthViewModel viewModel;
+        private readonly ApiService apiService;
 
         public string Email { get; set; }
 
@@ -17,31 +20,42 @@ namespace StudentInsight.ViewModels.Authentication
         public LoginViewModel(AuthViewModel viewModel)
         {
             this.viewModel = viewModel;
+            apiService = new ApiService();
 
-            LoginCommand = new RelayCommand(ExecuteLogin);
+            LoginCommand = new RelayCommand(async (p) => await ExecuteLogin(p));
             GoToRegisterCommand = new RelayCommand(_ => viewModel.ShowRegister());
         }
 
-        private void ExecuteLogin(object parameter)
+        private async Task ExecuteLogin(object parameter)
         {
             var passwordBox = parameter as PasswordBox;
             string password = passwordBox!.Password;
 
-            // TODO: Call API (Auth Service)
-
-            bool isSuccess = true;
-
-            if (isSuccess)
+            LoginRequest request = new()
             {
-                // Open the main window
+                Email = Email,
+                Password = password
+            };
+
+            try
+            {
+                var response = await apiService.PostAsync<LoginRequest, AuthenticationRespone>("User/login", request);
+
+                SessionService.Instance.SetUser(response.UserId);   // Set the Guid for current session
+
+                // On Success
                 var mainWindow = new MainWindow();
                 mainWindow.Show();
 
-                // Close the auth window
+                // Close the current window
                 Application.Current.Windows
-                    .OfType<Window>()
+                    .OfType<AuthWindow>()
                     .Single(w => w is AuthWindow)
                     .Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
