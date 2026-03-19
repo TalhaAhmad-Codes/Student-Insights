@@ -16,6 +16,12 @@ namespace StudentInsight.Mappers
                 CreatedAt = user.CreatedAt
             };
 
+        public static AuthResponseDto ToAuthDto(User user)
+            => new()
+            {
+                Id = user.Id
+            };
+
         public static User ToEntity(UserCreateDto dto)
             => new()
             {
