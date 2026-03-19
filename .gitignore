@@ -83,3 +83,6 @@ desktop.ini
 ############################################################
 
 **/wwwroot/lib
+
+# Migrations
+**/Migrations/

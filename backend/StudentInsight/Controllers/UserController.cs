@@ -57,8 +57,8 @@ namespace StudentInsight.Controllers
         {
             try
             {
-                var id = await service.LoginAsync(dto);
-                return Ok(id);
+                var user = await service.LoginAsync(dto);
+                return Ok(user);
             }
             catch (DomainException e)
             {
@@ -71,8 +71,8 @@ namespace StudentInsight.Controllers
         {
             try
             {
-                var userId = await service.RegisterAsync(dto);
-                return Ok(userId);
+                var user = await service.RegisterAsync(dto);
+                return Ok(user);
             }
             catch (DomainException e)
             {
