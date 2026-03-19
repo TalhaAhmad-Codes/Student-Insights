@@ -11,7 +11,7 @@ namespace StudentInsight.Services.Interfaces
         Task<bool> ChangePasswordAsync(UserChangePasswordDto dto);
         
         // Account Login/Register Services
-        Task<Guid> LoginAsync(UserLoginDto dto);
-        Task<Guid> RegisterAsync(UserCreateDto dto);
+        Task<AuthResponseDto> LoginAsync(UserLoginDto dto);
+        Task<AuthResponseDto> RegisterAsync(UserCreateDto dto);
     }
 }

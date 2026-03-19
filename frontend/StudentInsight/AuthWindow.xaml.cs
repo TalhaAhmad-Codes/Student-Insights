@@ -1,4 +1,6 @@
 ﻿using StudentInsight.ViewModels;
+using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,21 +9,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace StudentInsight
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AuthWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AuthWindow : Window
     {
-        public MainWindow()
+        public AuthWindow()
         {
             InitializeComponent();
-
-            DataContext = new MainWindowViewModel();
+            DataContext = new AuthViewModel();
         }
     }
 }

@@ -72,7 +72,7 @@ namespace StudentInsight.Services.Implementation
             return user is null ? null : UserMapper.ToDto(user);
         }
 
-        public async Task<Guid> LoginAsync(UserLoginDto dto)
+        public async Task<AuthResponseDto> LoginAsync(UserLoginDto dto)
         {
             var user = await repository.GetByEmailAsync(dto.Email);
 
@@ -88,13 +88,21 @@ namespace StudentInsight.Services.Implementation
                 throw new DomainException("Wrong password! Try again.");
             }
 
-            return user.Id;
+            return UserMapper.ToAuthDto(user);
         }
 
-        public async Task<Guid> RegisterAsync(UserCreateDto dto)
+        public async Task<AuthResponseDto> RegisterAsync(UserCreateDto dto)
         {
-            var user = await CreateAsync(dto);
-            return user.Id;
+            var user = await repository.GetByEmailAsync(dto.Email);
+
+            if (user is not null)
+            {
+                throw new DomainException("Email is already registered.");
+            }
+            
+            user = UserMapper.ToEntity(dto);
+            await repository.AddAsync(user);
+            return UserMapper.ToAuthDto(user);
         }
 
         public async Task<bool> RemoveAsync(Guid id)

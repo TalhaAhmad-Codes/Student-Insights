@@ -1,4 +1,5 @@
-﻿using StudentInsight.ViewModels;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,18 +11,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace StudentInsight
+namespace StudentInsight.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for TemplateView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TemplateView : UserControl
     {
-        public MainWindow()
+        public TemplateView()
         {
             InitializeComponent();
-
-            DataContext = new MainWindowViewModel();
         }
     }
 }
