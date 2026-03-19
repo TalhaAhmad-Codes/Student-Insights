@@ -1,5 +1,6 @@
 ﻿using StudentInsight.Helpers;
 using StudentInsight.Models.Authentication;
+using StudentInsight.Routes;
 using StudentInsight.Services;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,9 +40,11 @@ namespace StudentInsight.ViewModels.Authentication
 
             try
             {
-                var id = await apiService.PostAsync<LoginRequest, Guid>("User/login", request);
+                var response = await apiService.PostAsync<LoginRequest, AuthenticationRespone>(UserRoute.Post.Login, request);
 
-                SessionService.Instance.SetUser(id);   // Set the Guid for current session
+                SessionService.Instance.SetUser(response.UserId);   // Set the Guid for current session
+                
+                MessageBox.Show("Login successful!");
 
                 // On Success
                 var mainWindow = new MainWindow();
@@ -52,12 +55,12 @@ namespace StudentInsight.ViewModels.Authentication
                     .OfType<AuthWindow>()
                     .Single(w => w is AuthWindow)
                     .Close();
-        }
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-}
+        }
 
         private void GoToRegister(object obj)
         {

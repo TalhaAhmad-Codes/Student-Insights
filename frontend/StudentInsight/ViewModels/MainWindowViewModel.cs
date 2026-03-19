@@ -1,4 +1,5 @@
 ﻿using StudentInsight.Models.Users;
+using StudentInsight.Routes;
 using StudentInsight.Services;
 using System.ComponentModel;
 using System.Windows;
@@ -8,6 +9,7 @@ namespace StudentInsight.ViewModels
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private readonly ApiService apiService;
+        private readonly Guid userId;
         private string username;
         
         public UserResponse UserResponse { get; private set; }
@@ -28,7 +30,8 @@ namespace StudentInsight.ViewModels
             apiService = new ApiService();
 
             // Get UserId from session
-            UserId = SessionService.Instance.UserId.ToString();
+            userId = SessionService.Instance.UserId;
+            UserId = userId.ToString();
 
             _ = LoadUser();
         }
@@ -37,7 +40,7 @@ namespace StudentInsight.ViewModels
         {
             try
             {
-                UserResponse = await apiService.GetAsync<UserResponse>($"User/{UserId}");
+                UserResponse = await apiService.GetAsync<UserResponse>(UserRoute.Get.ById(userId));
                 Username = UserResponse.Username;
             }
             catch (Exception ex)
