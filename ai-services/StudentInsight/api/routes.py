@@ -5,12 +5,12 @@ from uuid import UUID
 ##################################################
 
 # Global values
-_global = {
+GLOBAL = {
     'host': 'http://localhost:5011'
 }
 
 # The API endpoint
-api = lambda : f"{_global['host']}/api"
+BASE_URL: str = f"{GLOBAL['host']}/api/"
 
 ##################################################
 # API Endpoints
@@ -18,7 +18,7 @@ api = lambda : f"{_global['host']}/api"
 
 # ********** User - Endpoints ********** #
 class User:
-    ENDPOINT: str = f"{api()}/User"
+    ENDPOINT: str = f"User"
 
     # GET
     class Get:
@@ -62,7 +62,7 @@ class User:
 
 # ********** Department - Endpoints ********** #
 class Department:
-    ENDPOINT: str = f"{api()}/Department"
+    ENDPOINT: str = f"Department"
 
     # GET
     class Get:
@@ -98,7 +98,7 @@ class Department:
 
 # ********** Student - Endpoints ********** #
 class Student:
-    ENDPOINT: str = f"{api()}/Student"
+    ENDPOINT: str = f"Student"
 
     # GET
     class Get:
@@ -134,7 +134,7 @@ class Student:
 
 # ********** Exam - Endpoints ********** #
 class Exam:
-    ENDPOINT: str = f"{api()}/Exam"
+    ENDPOINT: str = f"Exam"
 
     # GET
     class Get:
@@ -170,7 +170,7 @@ class Exam:
 
 # ********** Student Exam Logs - Endpoints ********** #
 class StudentExamLogs:
-    ENDPOINT: str = f"{api()}/StudentExamLogs"
+    ENDPOINT: str = f"StudentExamLogs"
 
     # GET
     class Get:
