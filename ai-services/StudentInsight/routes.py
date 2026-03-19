@@ -28,7 +28,7 @@ class User:
 
         @staticmethod
         def by_id(_id: UUID) -> str:
-            return f"{User.ENDPOINT}/{id}"
+            return f"{User.ENDPOINT}/{_id}"
 
     # POST
     class Post:
@@ -72,7 +72,7 @@ class Department:
 
         @staticmethod
         def by_id(_id: UUID) -> str:
-            return f"{Department.ENDPOINT}/{id}"
+            return f"{Department.ENDPOINT}/{_id}"
 
     # POST
     class Post:
@@ -108,7 +108,7 @@ class Student:
 
         @staticmethod
         def by_id(_id: UUID) -> str:
-            return f"{Student.ENDPOINT}/{id}"
+            return f"{Student.ENDPOINT}/{_id}"
 
     # POST
     class Post:
@@ -144,7 +144,7 @@ class Exam:
 
         @staticmethod
         def by_id(_id: UUID) -> str:
-            return f"{Exam.ENDPOINT}/{id}"
+            return f"{Exam.ENDPOINT}/{_id}"
 
     # POST
     class Post:
@@ -180,7 +180,7 @@ class StudentExamLogs:
 
         @staticmethod
         def by_id(_id: UUID) -> str:
-            return f"{StudentExamLogs.ENDPOINT}/{id}"
+            return f"{StudentExamLogs.ENDPOINT}/{_id}"
 
     # POST
     class Post:
