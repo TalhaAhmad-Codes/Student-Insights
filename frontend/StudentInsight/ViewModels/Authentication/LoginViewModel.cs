@@ -39,9 +39,9 @@ namespace StudentInsight.ViewModels.Authentication
 
             try
             {
-                var response = await apiService.PostAsync<LoginRequest, AuthenticationRespone>("User/login", request);
+                var id = await apiService.PostAsync<LoginRequest, Guid>("User/login", request);
 
-                SessionService.Instance.SetUser(response.UserId);   // Set the Guid for current session
+                SessionService.Instance.SetUser(id);   // Set the Guid for current session
 
                 // On Success
                 var mainWindow = new MainWindow();
@@ -52,12 +52,12 @@ namespace StudentInsight.ViewModels.Authentication
                     .OfType<AuthWindow>()
                     .Single(w => w is AuthWindow)
                     .Close();
-            }
+        }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-        }
+}
 
         private void GoToRegister(object obj)
         {
