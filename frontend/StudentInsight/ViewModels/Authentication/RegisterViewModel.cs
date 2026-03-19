@@ -1,5 +1,6 @@
 ﻿using StudentInsight.Helpers;
 using StudentInsight.Models.Authentication;
+using StudentInsight.Routes;
 using StudentInsight.Services;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,9 +43,9 @@ namespace StudentInsight.ViewModels.Authentication
 
             try
             {
-                var id = await apiService.PostAsync<RegisterRequest, Guid>("User/register", request);
+                var response = await apiService.PostAsync<RegisterRequest, AuthenticationRespone>(UserRoute.Post.Register, request);
 
-                SessionService.Instance.SetUser(id);
+                SessionService.Instance.SetUser(response.UserId);
 
                 MessageBox.Show("Registration successful!");
             }

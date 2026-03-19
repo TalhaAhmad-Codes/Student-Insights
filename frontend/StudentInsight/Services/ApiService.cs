@@ -11,7 +11,7 @@ namespace StudentInsight.Services
         {
             httpClient = new HttpClient
             {
-                BaseAddress = new Uri("http://localhost:5011/api/") // The API
+                BaseAddress = new Uri(Routes.GlobalRoute.API) // The API
             };
         }
 
