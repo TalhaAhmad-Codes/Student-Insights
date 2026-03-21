@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="StudentInsight.Views.TemplateView"
+﻿<UserControl x:Class="StudentInsight.Views.Departments.ManageDepartmentsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Background="#F9FAFB"
@@ -6,8 +6,6 @@
              MinWidth="1000"
              MaxWidth="1024"
              MaxHeight="1330">
-    <!-- Actual Min-Res was around 1001 x 797 -->
-    <!-- Actual Max-Res was around 1335 x 1027 -->
 
     <!-- Main Content -->
     <Grid Background="White"
@@ -26,7 +24,7 @@
         <!-- ==================================== CONTENT ==================================== -->
 
         <!-- Title -->
-        <TextBlock Text="Title"
+        <TextBlock Text="Manage Departments"
                    FontSize="26"
                    FontWeight="Bold"
                    FontFamily="Segoe UI"
@@ -44,19 +42,36 @@
 
                 <TextBox Width="150"
                          Margin="5"
-                         Text="Name"/>
+                         Text="Department Name"/>
 
-            </StackPanel>
+                <!-- Buttons -->
 
-            <!-- Buttons -->
-            <StackPanel Orientation="Horizontal"
-                        Margin="0,0,0,10">
-
-                <Button Content="➕ Add"
-                        Background="LightGreen"
+                <Button Content="➕ Add Department"
+                        Background="DeepSkyBlue"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command=""
+                        Command="{Binding AddDepartment}"
+                        Margin="5"/>
+
+                <Button Content="🔼 Update Department"
+                        Background="Orange"
+                        Foreground="Black"
+                        Padding="5,2,5,2"
+                        Command="{Binding UpdateDepartment}"
+                        Margin="5"/>
+
+                <Button Content="❌ Delete Department"
+                        Background="OrangeRed"
+                        Foreground="Black"
+                        Padding="5,2,5,2"
+                        Command="{Binding DeleteDepartment}"
+                        Margin="5"/>
+
+                <Button Content="⧩ Filter Departments"
+                        Background="PaleGreen"
+                        Foreground="Black"
+                        Padding="5,2,5,2"
+                        Command="{Binding FilterDepartments}"
                         Margin="5"/>
 
             </StackPanel>
@@ -73,8 +88,15 @@
                 <!-- Data Columns -->
                 <DataGrid.Columns>
 
-                    <DataGridTemplateColumn Header="Name"
-                                            Width="*"/>
+                    <DataGridTemplateColumn Header="Department Name"
+                                            Width="*"
+                                            CanUserResize="True"
+                                            CanUserReorder="True"/>
+
+                    <DataGridTemplateColumn Header="Total Students"
+                                            Width="*"
+                                            CanUserResize="True"
+                                            CanUserReorder="True"/>
 
                 </DataGrid.Columns>
             </DataGrid>

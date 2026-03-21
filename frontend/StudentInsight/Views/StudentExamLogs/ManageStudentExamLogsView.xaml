@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="StudentInsight.Views.Students.ManageStudentsView"
+﻿<UserControl x:Class="StudentInsight.Views.StudentExamLogs.ManageStudentExamLogsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Background="#F9FAFB"
@@ -24,7 +24,7 @@
         <!-- ==================================== CONTENT ==================================== -->
 
         <!-- Title -->
-        <TextBlock Text="Manage Students"
+        <TextBlock Text="Manage Student Exam Logs"
                    FontSize="26"
                    FontWeight="Bold"
                    FontFamily="Segoe UI"
@@ -40,67 +40,71 @@
             <StackPanel Orientation="Horizontal"
                         Margin="0,0,0,10">
 
-                <TextBox Width="150"
-                         Margin="5"
-                         Text="Student Name"/>
-
-                <TextBox Width="150"
-                         Margin="5"
-                         Text="Father Name"/>
-
-                <TextBox Width="150"
-                         Margin="5"
-                         Text="Roll Number"/>
+                <ComboBox Width="150"
+                          Margin="5"
+                          Text="Student"
+                          ItemsSource="{Binding GetStudents}"
+                          SelectedItem="{Binding SelectedStudent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="Id" />
 
                 <ComboBox Width="150"
                           Margin="5"
-                          Text="Department"
-                          ItemsSource="{Binding GetDepartments}"
-                          SelectedItem="{Binding SelectedDepartment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Text="Exam"
+                          ItemsSource="{Binding GetExams}"
+                          SelectedItem="{Binding SelectedExam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           DisplayMemberPath="Name"
-                          SelectedValuePath="Id">
-                </ComboBox>
+                          SelectedValuePath="Id" />
 
-                <DatePicker Width="100"
-                            Margin="5"
-                            Text="Date of Birth" />
+                <ComboBox Width="150"
+                          Margin="5"
+                          Text="Status"
+                          SelectedItem="{Binding SelectedDepartment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBox Width="150"
+                         Margin="5"
+                         Text="Obtained Marks"/>
+
+                <TextBox Width="350"
+                         Margin="5"
+                         Text="Note"/>
 
             </StackPanel>
-            
+
             <!-- Buttons -->
             <StackPanel Orientation="Horizontal"
                         Margin="0,0,0,10">
 
-                <Button Content="➕ Add Student"
+                <Button Content="➕ Add Student Exam Log"
                         Background="DeepSkyBlue"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command="{Binding AddStudent}"
+                        Command="{Binding AddStudentExamLog}"
                         Margin="5"/>
 
-                <Button Content="🔼 Update Student"
+                <Button Content="🔼 Update Student Exam Log"
                         Background="Orange"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command="{Binding UpdateStudent}"
+                        Command="{Binding UpdateStudentExamLog}"
                         Margin="5"/>
 
-                <Button Content="❌ Delete Student"
+                <Button Content="❌ Delete Student Exam Log"
                         Background="OrangeRed"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command="{Binding DeleteStudent}"
+                        Command="{Binding DeleteStudentExamLog}"
                         Margin="5"/>
 
-                <Button Content="⧩ Filter Students"
+                <Button Content="⧩ Filter Student Exam Logs"
                         Background="PaleGreen"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command="{Binding FilterStudents}"
+                        Command="{Binding FilterStudentExamLogs}"
                         Margin="5"/>
 
             </StackPanel>
-            
+
             <!-- Data Grid -->
             <DataGrid ItemsSource="{Binding DataSource}"
                       AutoGenerateColumns="False"
@@ -118,22 +122,22 @@
                                             CanUserResize="True"
                                             CanUserReorder="True"/>
 
-                    <DataGridTemplateColumn Header="Father Name"
-                                            Width="*"
-                                            CanUserResize="True"
-                                            CanUserReorder="True"/>
-
                     <DataGridTemplateColumn Header="Department Name"
                                             Width="*"
                                             CanUserResize="True"
                                             CanUserReorder="True"/>
 
-                    <DataGridTemplateColumn Header="Roll Number"
+                    <DataGridTemplateColumn Header="Status"
                                             Width="*"
                                             CanUserResize="True"
                                             CanUserReorder="True"/>
 
-                    <DataGridTemplateColumn Header="Date of Birth"
+                    <DataGridTemplateColumn Header="Obtained Marks"
+                                            Width="*"
+                                            CanUserResize="True"
+                                            CanUserReorder="True"/>
+
+                    <DataGridTemplateColumn Header="Note"
                                             Width="*"
                                             CanUserResize="True"
                                             CanUserReorder="True"/>

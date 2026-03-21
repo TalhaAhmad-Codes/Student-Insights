@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="StudentInsight.Views.Students.ManageStudentsView"
+﻿<UserControl x:Class="StudentInsight.Views.Exams.ManageExamsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Background="#F9FAFB"
@@ -24,7 +24,7 @@
         <!-- ==================================== CONTENT ==================================== -->
 
         <!-- Title -->
-        <TextBlock Text="Manage Students"
+        <TextBlock Text="Manage Exams"
                    FontSize="26"
                    FontWeight="Bold"
                    FontFamily="Segoe UI"
@@ -40,17 +40,14 @@
             <StackPanel Orientation="Horizontal"
                         Margin="0,0,0,10">
 
-                <TextBox Width="150"
-                         Margin="5"
-                         Text="Student Name"/>
+                <ComboBox Width="150"
+                          Margin="5"
+                          Text="Exam Type"
+                          SelectedItem="{Binding SelectedDepartment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox Width="150"
                          Margin="5"
-                         Text="Father Name"/>
-
-                <TextBox Width="150"
-                         Margin="5"
-                         Text="Roll Number"/>
+                         Text="Total Marks"/>
 
                 <ComboBox Width="150"
                           Margin="5"
@@ -58,49 +55,48 @@
                           ItemsSource="{Binding GetDepartments}"
                           SelectedItem="{Binding SelectedDepartment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           DisplayMemberPath="Name"
-                          SelectedValuePath="Id">
-                </ComboBox>
+                          SelectedValuePath="Id" />
 
                 <DatePicker Width="100"
                             Margin="5"
-                            Text="Date of Birth" />
+                            Text="Date of Conduct" />
 
             </StackPanel>
-            
+
             <!-- Buttons -->
             <StackPanel Orientation="Horizontal"
                         Margin="0,0,0,10">
 
-                <Button Content="➕ Add Student"
+                <Button Content="➕ Add Exam"
                         Background="DeepSkyBlue"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command="{Binding AddStudent}"
+                        Command="{Binding AddExam}"
                         Margin="5"/>
 
-                <Button Content="🔼 Update Student"
+                <Button Content="🔼 Update Exam"
                         Background="Orange"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command="{Binding UpdateStudent}"
+                        Command="{Binding UpdateExam}"
                         Margin="5"/>
 
-                <Button Content="❌ Delete Student"
+                <Button Content="❌ Delete Exam"
                         Background="OrangeRed"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command="{Binding DeleteStudent}"
+                        Command="{Binding DeleteExam}"
                         Margin="5"/>
 
-                <Button Content="⧩ Filter Students"
+                <Button Content="⧩ Filter Exams"
                         Background="PaleGreen"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command="{Binding FilterStudents}"
+                        Command="{Binding FilterExams}"
                         Margin="5"/>
 
             </StackPanel>
-            
+
             <!-- Data Grid -->
             <DataGrid ItemsSource="{Binding DataSource}"
                       AutoGenerateColumns="False"
@@ -113,12 +109,12 @@
                 <!-- Data Columns -->
                 <DataGrid.Columns>
 
-                    <DataGridTemplateColumn Header="Student Name"
+                    <DataGridTemplateColumn Header="Exam Type"
                                             Width="*"
                                             CanUserResize="True"
                                             CanUserReorder="True"/>
 
-                    <DataGridTemplateColumn Header="Father Name"
+                    <DataGridTemplateColumn Header="Total Marks"
                                             Width="*"
                                             CanUserResize="True"
                                             CanUserReorder="True"/>
@@ -128,12 +124,12 @@
                                             CanUserResize="True"
                                             CanUserReorder="True"/>
 
-                    <DataGridTemplateColumn Header="Roll Number"
+                    <DataGridTemplateColumn Header="Date of Conduct"
                                             Width="*"
                                             CanUserResize="True"
                                             CanUserReorder="True"/>
 
-                    <DataGridTemplateColumn Header="Date of Birth"
+                    <DataGridTemplateColumn Header="Attended Students"
                                             Width="*"
                                             CanUserResize="True"
                                             CanUserReorder="True"/>
