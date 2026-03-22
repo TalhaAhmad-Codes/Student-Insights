@@ -9,7 +9,7 @@ namespace StudentInsight.Repositories.Interfaces
         Task<PagedResultDto<StudentExamLogs>> GetAllAsync(StudentExamLogsFilterDto filterDto);
         
         Task<int> GetTotalMarks(Guid examId);
-        Task<bool> IsValidObtainedMarks(Guid logId, int totalMarks);
+        Task<bool> IsValidObtainedMarks(StudentExamLogs log, int totalMarks);
 
         Task UpdateExamTotalStudentsEnrolled(Guid examId);
         Task UpdateExamTotalStudentsEnrolled(Guid examId, int count);

@@ -56,7 +56,7 @@ namespace StudentInsight.Repositories.Implementation
             // Update the students count of the department
             department.TotalStudents = await students.CountAsync();
             dbContext.Departments.Update(department);
-            await SaveChangesAsync();
+            //await SaveChangesAsync();
         }
 
         public async Task UpdateDepartmentStudentsCount(Guid departmentId, int count)
@@ -76,7 +76,7 @@ namespace StudentInsight.Repositories.Implementation
 
             department.TotalStudents += count;
             dbContext.Departments.Update(department);
-            await SaveChangesAsync();
+            //await SaveChangesAsync();
         }
     }
 }

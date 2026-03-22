@@ -8,7 +8,8 @@ namespace StudentInsight.Validators.Exams
         public FilterExamValidator()
         {
             RuleFor(e => e.CreatorUserId)
-                .NotEmpty();
+                .NotEmpty()
+                .When(s => s.CreatorUserId.HasValue);
 
             RuleFor(e => e.DepartmentId)
                 .NotEmpty()

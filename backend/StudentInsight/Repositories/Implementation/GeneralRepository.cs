@@ -21,24 +21,30 @@ namespace StudentInsight.Repositories.Implementation
             => await dbSet.FindAsync(id);
 
         // Add an entity to the database
-        public async Task AddAsync(Entity entity)
+        public async Task AddAsync(Entity entity, bool canSave)
         {
             await dbSet.AddAsync(entity);
-            await SaveChangesAsync();
+
+            if (canSave)
+                await SaveChangesAsync();
         }
 
         // Delete an entity from the database
-        public async Task RemoveAsync(Entity entity)
+        public async Task RemoveAsync(Entity entity, bool canSave)
         {
             dbSet.Remove(entity);
-            await SaveChangesAsync();
+
+            if (canSave)
+                await SaveChangesAsync();
         }
 
         // Update an entity into database
-        public async Task UpdateAsync(Entity entity)
+        public async Task UpdateAsync(Entity entity, bool canSave)
         {
             dbSet.Update(entity);
-            await SaveChangesAsync();
+
+            if (canSave)
+                await SaveChangesAsync();
         }
 
         // Get paged result items
@@ -53,15 +59,17 @@ namespace StudentInsight.Repositories.Implementation
                 .ToListAsync();
         }
 
-        protected async Task SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task AddBulkAsync(List<Entity> entities)
+        public async Task AddBulkAsync(List<Entity> entities, bool canSave = true)
         {
             await dbContext.BulkInsertAsync(entities);
-            await SaveChangesAsync();
+
+            if (canSave)
+                await SaveChangesAsync();
         }
     }
 }

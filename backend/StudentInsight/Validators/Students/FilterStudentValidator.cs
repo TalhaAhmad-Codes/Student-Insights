@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using StudentInsight.DTOs.StudentDTOs;
-using StudentInsight.Validators.Length;
 
 namespace StudentInsight.Validators.Students
 {
@@ -9,7 +8,8 @@ namespace StudentInsight.Validators.Students
         public FilterStudentValidator()
         {
             RuleFor(s => s.CreatorUserId)
-                .NotEmpty();
+                .NotEmpty()
+                .When(s => s.CreatorUserId.HasValue);
 
             RuleFor(s => s.DepartmentId)
                 .NotEmpty()

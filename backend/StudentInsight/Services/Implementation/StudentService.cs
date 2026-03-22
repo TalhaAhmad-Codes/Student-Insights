@@ -19,17 +19,18 @@ namespace StudentInsight.Services.Implementation
         {
             var student = StudentMapper.ToEntity(dto);
             
-            await repository.AddAsync(student);
+            await repository.AddAsync(student, false);
 
             // Update the department "Total Students" count
             await repository.UpdateDepartmentStudentsCount(dto.DepartmentId);
-
+            
+            await repository.SaveChangesAsync();
             return StudentMapper.ToDto(student);
         }
 
         public async Task CreateBulkAsync(List<StudentCreateDto> dtos)
         {
-            await repository.AddBulkAsync(dtos.Select(StudentMapper.ToEntity).ToList());
+            await repository.AddBulkAsync(dtos.Select(StudentMapper.ToEntity).ToList(), false);
 
             Dictionary<Guid, bool> map = new();
             foreach (var dto in dtos)
@@ -47,6 +48,8 @@ namespace StudentInsight.Services.Implementation
                     map[dto.DepartmentId] = true;
                 }
             }
+
+            await repository.SaveChangesAsync();
         }
 
         public async Task<PagedResultDto<StudentResponseDto>> GetAllAsync(StudentFilterDto filterDto)
@@ -75,7 +78,9 @@ namespace StudentInsight.Services.Implementation
                 return false;
 
             await repository.UpdateDepartmentStudentsCount(student.DepartmentId, -1);   // Removes a student count
-            await repository.RemoveAsync(student);
+            await repository.RemoveAsync(student, false);
+
+            await repository.SaveChangesAsync();
             return true;
         }
 
@@ -102,7 +107,9 @@ namespace StudentInsight.Services.Implementation
             student.DepartmentId = dto.DepartmentId;
             student.DateOfBirth = dto.DateOfBirth;
 
-            await repository.UpdateAsync(student);
+            await repository.UpdateAsync(student, false);
+
+            await repository.SaveChangesAsync();
             return true;
         }
     }

@@ -51,13 +51,8 @@ namespace StudentInsight.Repositories.Implementation
             return exam is null ? 0 : exam.TotalMarks;
         }
 
-        public async Task<bool> IsValidObtainedMarks(Guid logId, int totalMarks)
+        public async Task<bool> IsValidObtainedMarks(StudentExamLogs log, int totalMarks)
         {
-            var log = await GetByIdAsync(logId);
-
-            if (log is null)
-                return false;
-
             return log.ObtainedMarks <= totalMarks;
         }
 
@@ -75,7 +70,7 @@ namespace StudentInsight.Repositories.Implementation
 
             exam.TotalStudentsEnrolled = await students.CountAsync();
             dbContext.Exams.Update(exam);
-            await SaveChangesAsync();
+            //await SaveChangesAsync();
         }
 
         public async Task UpdateExamTotalStudentsEnrolled(Guid examId, int count)
@@ -94,7 +89,7 @@ namespace StudentInsight.Repositories.Implementation
 
             exam.TotalStudentsEnrolled += count;
             dbContext.Exams.Update(exam);
-            await SaveChangesAsync();
+            //await SaveChangesAsync();
         }
     }
 }
