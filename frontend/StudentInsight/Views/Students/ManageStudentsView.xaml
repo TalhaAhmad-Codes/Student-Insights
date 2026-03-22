@@ -113,30 +113,8 @@
                 <!-- Data Columns -->
                 <DataGrid.Columns>
 
-                    <DataGridTemplateColumn Header="Student Name"
-                                            Width="*"
-                                            CanUserResize="True"
-                                            CanUserReorder="True"/>
-
-                    <DataGridTemplateColumn Header="Father Name"
-                                            Width="*"
-                                            CanUserResize="True"
-                                            CanUserReorder="True"/>
-
-                    <DataGridTemplateColumn Header="Department Name"
-                                            Width="*"
-                                            CanUserResize="True"
-                                            CanUserReorder="True"/>
-
-                    <DataGridTemplateColumn Header="Roll Number"
-                                            Width="*"
-                                            CanUserResize="True"
-                                            CanUserReorder="True"/>
-
-                    <DataGridTemplateColumn Header="Date of Birth"
-                                            Width="*"
-                                            CanUserResize="True"
-                                            CanUserReorder="True"/>
+                    <DataGridTemplateColumn Header="Name"
+                                            Width="*"/>
 
                 </DataGrid.Columns>
             </DataGrid>
