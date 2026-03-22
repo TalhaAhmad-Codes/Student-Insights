@@ -134,7 +134,12 @@ namespace StudentInsight.Data
                 // Total Marks
                 builder.Property(e => e.TotalMarks)
                        .IsRequired()
-                       .HasColumnName("TotalMarks");
+                       .HasColumnName("Marks");
+
+                // Total Students Enrolled
+                builder.Property(e => e.TotalStudentsEnrolled)
+                       .IsRequired()
+                       .HasColumnName("StudentsEnrolled");
 
                 // Conducted Date
                 builder.Property(e => e.ConductedDate)

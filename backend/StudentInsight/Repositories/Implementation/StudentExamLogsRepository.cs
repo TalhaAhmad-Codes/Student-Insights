@@ -3,6 +3,7 @@ using StudentInsight.Data;
 using StudentInsight.DTOs.Common;
 using StudentInsight.DTOs.StudentExamLogsDTOs;
 using StudentInsight.Entities;
+using StudentInsight.Exceptions;
 using StudentInsight.Repositories.Interfaces;
 
 namespace StudentInsight.Repositories.Implementation
@@ -58,6 +59,42 @@ namespace StudentInsight.Repositories.Implementation
                 return false;
 
             return log.ObtainedMarks <= totalMarks;
+        }
+
+        public async Task UpdateExamTotalStudentsEnrolled(Guid examId)
+        {
+            var exam = await dbContext.Exams.FindAsync(examId);
+
+            if (exam is null)
+            {
+                throw new DomainException("Exam not found.");
+            }
+
+            var students = dbSet.AsQueryable()
+                .Where(l => l.ExamId == examId);
+
+            exam.TotalStudentsEnrolled = await students.CountAsync();
+            dbContext.Exams.Update(exam);
+            await SaveChangesAsync();
+        }
+
+        public async Task UpdateExamTotalStudentsEnrolled(Guid examId, int count)
+        {
+            var exam = await dbContext.Exams.FindAsync(examId);
+
+            if (exam is null)
+            {
+                throw new DomainException("Exam not found.");
+            }
+
+            if (exam.TotalStudentsEnrolled + count < 0)
+            {
+                throw new DomainException("Total number of students enrolled can't be negative.");
+            }
+
+            exam.TotalStudentsEnrolled += count;
+            dbContext.Exams.Update(exam);
+            await SaveChangesAsync();
         }
     }
 }

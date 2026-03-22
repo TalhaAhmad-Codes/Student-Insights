@@ -64,12 +64,14 @@ namespace StudentInsight.Repositories.Implementation
             var department = await dbContext.Departments.FindAsync(departmentId);
 
             if (department is null)
+            {
                 throw new DomainException("Department Not Found!");
+            }
 
             // If students count could become negative
             if (department.TotalStudents + count < 0)
             {
-                throw new DomainException("Total Students count can't be negative.");
+                throw new DomainException("Total number of students can't be negative.");
             }
 
             department.TotalStudents += count;
