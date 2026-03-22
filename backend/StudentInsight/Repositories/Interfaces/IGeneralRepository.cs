@@ -7,6 +7,5 @@
         Task AddBulkAsync(List<Entity> entities);
         Task RemoveAsync(Entity entity);
         Task UpdateAsync(Entity entity);
-        Task SaveChangesAsync();
     }
 }

@@ -15,7 +15,8 @@ namespace StudentInsight.Repositories.Implementation
         {
             var query = dbSet.AsNoTracking().AsQueryable();
 
-            query = query.Where(l => l.CreatorUserId == filterDto.CreatorUserId);
+            if (filterDto.CreatorUserId.HasValue)
+                query = query.Where(l => l.CreatorUserId == filterDto.CreatorUserId);
 
             if (filterDto.ExamId.HasValue)
                 query = query.Where(l => l.ExamId == filterDto.ExamId);

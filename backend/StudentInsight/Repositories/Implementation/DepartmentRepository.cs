@@ -3,7 +3,6 @@ using StudentInsight.Data;
 using StudentInsight.DTOs.Common;
 using StudentInsight.DTOs.DepartmentDTOs;
 using StudentInsight.Entities;
-using StudentInsight.Helpers.Utils;
 using StudentInsight.Repositories.Interfaces;
 
 namespace StudentInsight.Repositories.Implementation
@@ -16,7 +15,8 @@ namespace StudentInsight.Repositories.Implementation
         {
             var query = dbSet.AsNoTracking().AsQueryable();
 
-            query = query.Where(d => d.CreatorUserId == filterDto.CreatorUserId);
+            if (filterDto.CreatorUserId.HasValue)
+                query = query.Where(d => d.CreatorUserId == filterDto.CreatorUserId);
 
             if (filterDto.Name != null)
                 query = query.Where(d => d.Name == filterDto.Name.Trim().ToLower());

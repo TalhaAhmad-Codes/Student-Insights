@@ -53,7 +53,7 @@ namespace StudentInsight.Repositories.Implementation
                 .ToListAsync();
         }
 
-        public async Task SaveChangesAsync()
+        protected async Task SaveChangesAsync()
         {
             await dbContext.SaveChangesAsync();
         }
