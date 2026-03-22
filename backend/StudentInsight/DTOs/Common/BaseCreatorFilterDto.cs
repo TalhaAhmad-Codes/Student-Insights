@@ -2,6 +2,6 @@
 {
     public abstract class BaseCreatorFilterDto : BaseFilterDto
     {
-        public Guid CreatorUserId { get; init; }
+        public Guid? CreatorUserId { get; init; } = null;
     }
 }

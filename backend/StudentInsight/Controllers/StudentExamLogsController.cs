@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentInsight.DTOs.StudentExamLogsDTOs;
+using StudentInsight.Exceptions;
 using StudentInsight.Services.Interfaces;
 
 namespace StudentInsight.Controllers
@@ -32,8 +33,15 @@ namespace StudentInsight.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(StudentExamLogsCreateDto dto)
         {
-            var log = await service.CreateAsync(dto);
-            return Ok(log);
+            try
+            {
+                var log = await service.CreateAsync(dto);
+                return Ok(log);
+            }
+            catch (DomainException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("bulk")]
@@ -46,8 +54,15 @@ namespace StudentInsight.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(StudentExamLogsUpdateDto dto)
         {
-            var succeed = await service.UpdateAsync(dto);
-            return succeed ? Ok("Log has been updated successfully.") : NotFound();
+            try
+            {
+                var succeed = await service.UpdateAsync(dto);
+                return succeed ? Ok("Log has been updated successfully.") : NotFound();
+            }
+            catch (DomainException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]

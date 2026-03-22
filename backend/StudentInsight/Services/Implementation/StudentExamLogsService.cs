@@ -1,5 +1,6 @@
 ﻿using StudentInsight.DTOs.Common;
 using StudentInsight.DTOs.StudentExamLogsDTOs;
+using StudentInsight.Entities;
 using StudentInsight.Exceptions;
 using StudentInsight.Mappers;
 using StudentInsight.Repositories.Interfaces;
@@ -16,10 +17,10 @@ namespace StudentInsight.Services.Implementation
             this.repository = repository;
         }
 
-        private async void AgainstInValidObtainedMarks(Guid logId, Guid examId)
+        private async Task AgainstInValidObtainedMarks(StudentExamLogs log, Guid examId)
         {
             int totalMarks = await repository.GetTotalMarks(examId);
-            bool valid = await repository.IsValidObtainedMarks(logId, totalMarks);
+            bool valid = await repository.IsValidObtainedMarks(log, totalMarks);
 
             if (!valid)
             {
@@ -31,15 +32,31 @@ namespace StudentInsight.Services.Implementation
         {
             var log = StudentExamLogsMapper.ToEntity(dto);
 
-            AgainstInValidObtainedMarks(log.Id, log.ExamId);
+            await AgainstInValidObtainedMarks(log, log.ExamId);
 
-            await repository.AddAsync(log);
+            await repository.AddAsync(log, false);
+            await repository.UpdateExamTotalStudentsEnrolled(log.ExamId, 1);
+
+            await repository.SaveChangesAsync();
             return StudentExamLogsMapper.ToDto(log);
         }
 
         public async Task CreateBulkAsync(List<StudentExamLogsCreateDto> dtos)
         {
-            await repository.AddBulkAsync(dtos.Select(StudentExamLogsMapper.ToEntity).ToList());
+            await repository.AddBulkAsync(dtos.Select(StudentExamLogsMapper.ToEntity).ToList(), false);
+
+            // Update the number of students enrolled in corresponding exams
+            Dictionary<Guid, bool> map = new();
+            foreach (var dto in dtos)
+            {
+                if (!map.ContainsKey(dto.ExamId))
+                {
+                    await repository.UpdateExamTotalStudentsEnrolled(dto.ExamId);
+                    map[dto.ExamId] = true;
+                }
+            }
+
+            await repository.SaveChangesAsync();
         }
 
         public async Task<PagedResultDto<StudentExamLogsResponseDto>> GetAllAsync(StudentExamLogsFilterDto filterDto)
@@ -67,7 +84,10 @@ namespace StudentInsight.Services.Implementation
             if (log is null)
                 return false;
 
-            await repository.RemoveAsync(log);
+            await repository.UpdateExamTotalStudentsEnrolled(log.ExamId, -1);
+            await repository.RemoveAsync(log, false);
+
+            await repository.SaveChangesAsync();
             return true;
         }
 
@@ -78,14 +98,26 @@ namespace StudentInsight.Services.Implementation
             if (log is null)
                 return false;
 
+            // Update the number of students enrolled in the exam
+            if (log.ExamId != dto.ExamId)
+            {
+                // Remove previous
+                await repository.UpdateExamTotalStudentsEnrolled(dto.ExamId, -1);
+
+                // Add new
+                await repository.UpdateExamTotalStudentsEnrolled(log.ExamId, 1);
+            }
+
             log.Status = dto.Status;
             log.ExamId = dto.ExamId;
             log.StudentId = dto.StudentId;
             log.ObtainedMarks = dto.ObtainedMarks;
             
-            AgainstInValidObtainedMarks(log.Id, log.ExamId);
+            await AgainstInValidObtainedMarks(log, log.ExamId);
 
-            await repository.UpdateAsync(log);
+            await repository.UpdateAsync(log, false);
+            
+            await repository.SaveChangesAsync();
             return true;
         }
     }

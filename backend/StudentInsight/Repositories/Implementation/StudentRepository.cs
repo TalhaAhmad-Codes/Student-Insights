@@ -3,7 +3,7 @@ using StudentInsight.Data;
 using StudentInsight.DTOs.Common;
 using StudentInsight.DTOs.StudentDTOs;
 using StudentInsight.Entities;
-using StudentInsight.Helpers.Utils;
+using StudentInsight.Exceptions;
 using StudentInsight.Repositories.Interfaces;
 
 namespace StudentInsight.Repositories.Implementation
@@ -16,7 +16,8 @@ namespace StudentInsight.Repositories.Implementation
         {
             var query = dbSet.AsNoTracking().AsQueryable();
 
-            query = query.Where(s => s.CreatorUserId == filterDto.CreatorUserId);
+            if (filterDto.CreatorUserId.HasValue)
+                query = query.Where(s => s.CreatorUserId == filterDto.CreatorUserId);
 
             if (filterDto.DepartmentId.HasValue)
                 query = query.Where(s => s.DepartmentId == filterDto.DepartmentId);
@@ -38,6 +39,44 @@ namespace StudentInsight.Repositories.Implementation
                 Items = items,
                 TotalCount = totalCount
             };
+        }
+
+        public async Task UpdateDepartmentStudentsCount(Guid departmentId)
+        {
+            // Get the department
+            var department = await dbContext.Departments.FindAsync(departmentId);
+
+            if (department is null)
+                throw new DomainException("Department Not Found!");
+
+            // Get all students from corresponding department
+            var students = dbSet.AsQueryable()
+                .Where(s => s.DepartmentId == departmentId);
+
+            // Update the students count of the department
+            department.TotalStudents = await students.CountAsync();
+            dbContext.Departments.Update(department);
+            //await SaveChangesAsync();
+        }
+
+        public async Task UpdateDepartmentStudentsCount(Guid departmentId, int count)
+        {
+            var department = await dbContext.Departments.FindAsync(departmentId);
+
+            if (department is null)
+            {
+                throw new DomainException("Department Not Found!");
+            }
+
+            // If students count could become negative
+            if (department.TotalStudents + count < 0)
+            {
+                throw new DomainException("Total number of students can't be negative.");
+            }
+
+            department.TotalStudents += count;
+            dbContext.Departments.Update(department);
+            //await SaveChangesAsync();
         }
     }
 }

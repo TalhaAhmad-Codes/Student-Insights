@@ -104,6 +104,11 @@ namespace StudentInsight.Data
                 builder.HasIndex(d => new { d.Name, d.CreatorUserId })
                        .IsUnique();
 
+                // Total Students
+                builder.Property(d => d.TotalStudents)
+                       .IsRequired()
+                       .HasColumnName("TotalStudents");
+
                 /* ----- Relations ----- */
 
                 // Departments <-> User
@@ -129,7 +134,12 @@ namespace StudentInsight.Data
                 // Total Marks
                 builder.Property(e => e.TotalMarks)
                        .IsRequired()
-                       .HasColumnName("TotalMarks");
+                       .HasColumnName("Marks");
+
+                // Total Students Enrolled
+                builder.Property(e => e.TotalStudentsEnrolled)
+                       .IsRequired()
+                       .HasColumnName("StudentsEnrolled");
 
                 // Conducted Date
                 builder.Property(e => e.ConductedDate)
