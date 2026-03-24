@@ -1,0 +1,147 @@
+﻿<UserControl x:Class="StudentInsight.Views.ExamLogs.ManageExamLogs"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#F9FAFB"
+             MinHeight="790"
+             MinWidth="1000"
+             MaxWidth="1024"
+             MaxHeight="1330">
+
+    <!-- Main Content -->
+    <Grid Background="White"
+          Margin="10">
+
+        <!-- Grid Definitions -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ==================================== CONTENT ==================================== -->
+
+        <!-- Title -->
+        <TextBlock Text="Manage Exam Logs"
+                   FontSize="26"
+                   FontWeight="Bold"
+                   FontFamily="Segoe UI"
+                   Foreground="#1E3A8A"/>
+
+        <!-- Form -->
+        <StackPanel Grid.Row="1"
+                    Margin="0,10,0,0"
+                    Orientation="Vertical"
+                    VerticalAlignment="Top">
+
+            <!-- Entries -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,0,0,10">
+
+                <ComboBox Width="150"
+                          Margin="5"
+                          Text="Student"
+                          ItemsSource="{Binding GetStudents}"
+                          SelectedItem="{Binding SelectedStudent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          DisplayMemberPath="StudentName"
+                          SelectedValuePath="Id">
+                </ComboBox>
+
+                <ComboBox Width="150"
+                          Margin="5"
+                          Text="Exam"
+                          ItemsSource="{Binding GetExams}"
+                          SelectedItem="{Binding SelectedExam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="Id">
+                </ComboBox>
+
+                <TextBox Width="150"
+                         Margin="5"
+                         Text="Obtained Marks"/>
+
+                <ComboBox Width="150"
+                          Margin="5"
+                          Text="Status"
+                          SelectedItem="{Binding SelectedExam, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                </ComboBox>
+
+                <TextBox Width="350"
+                         Margin="5"
+                         Text="Note"/>
+
+            </StackPanel>
+
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,0,0,10">
+
+                <Button Content="➕ Add Log"
+                        Background="DeepSkyBlue"
+                        Foreground="Black"
+                        Padding="5,2,5,2"
+                        Command="{Binding AddLog}"
+                        Margin="5"/>
+
+                <Button Content="🔼 Update Log"
+                        Background="Orange"
+                        Foreground="Black"
+                        Padding="5,2,5,2"
+                        Command="{Binding UpdateLog}"
+                        Margin="5"/>
+
+                <Button Content="❌ Delete Log"
+                        Background="OrangeRed"
+                        Foreground="Black"
+                        Padding="5,2,5,2"
+                        Command="{Binding DeleteLog}"
+                        Margin="5"/>
+
+                <Button Content="⧩ Filter Logs"
+                        Background="PaleGreen"
+                        Foreground="Black"
+                        Padding="5,2,5,2"
+                        Command="{Binding FilterLogs}"
+                        Margin="5"/>
+
+            </StackPanel>
+
+            <!-- Data Grid -->
+            <DataGrid ItemsSource="{Binding DataSource}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      Margin="0,10,0,0"
+                      Background="#1E3A8A"
+                      Foreground="AliceBlue"
+                      Padding="2,2,2,2">
+
+                <!-- Data Columns -->
+                <DataGrid.Columns>
+
+                    <DataGridTemplateColumn Header="Student Name"
+                                            Width="*"/>
+
+                    <DataGridTemplateColumn Header="Exam Type"
+                                            Width="*"/>
+
+                    <DataGridTemplateColumn Header="Department"
+                                            Width="*"/>
+
+                    <DataGridTemplateColumn Header="Date of Conduct"
+                                            Width="*"/>
+
+                    <DataGridTemplateColumn Header="Obtained Marks"
+                                            Width="*"/>
+
+                    <DataGridTemplateColumn Header="Status"
+                                            Width="*"/>
+
+                    <DataGridTemplateColumn Header="Note"
+                                            Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</UserControl>

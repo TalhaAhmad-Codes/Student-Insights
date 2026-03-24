@@ -120,5 +120,63 @@ namespace StudentInsight.Services.Implementation
             await repository.SaveChangesAsync();
             return true;
         }
+
+        public async Task<PagedResultDto<StudentExamLogsDetailedResponseDto>> GetAllDetailedAsync(StudentExamLogsFilterDto filterDto)
+        {
+            var result = await repository.GetAllAsync(filterDto);
+
+            // Converting from Entity -> Detailed DTO
+            List<StudentExamLogsDetailedResponseDto> pagedDtos = [];
+
+            foreach (var log in result.Items)
+            {
+                var dto = await GetDetailedByIdAsync(log.Id);
+                pagedDtos.Add(dto!);
+            }
+
+            return new PagedResultDto<StudentExamLogsDetailedResponseDto>
+            {
+                Items = pagedDtos,
+                TotalCount = result.TotalCount
+            };
+        }
+
+        public async Task<StudentExamLogsDetailedResponseDto?> GetDetailedByIdAsync(Guid id)
+        {
+            // Get entity
+            var log = await repository.GetByIdAsync(id);
+
+            if (log is null) return null;
+
+            // Get DTO
+            var dto = StudentExamLogsMapper.ToDetailedDto(log);
+
+            // Get entities from relation
+            var exam = await repository.GetExamByIdAsync(dto.ExamId);
+            var student = await repository.GetStudentByIdAsync(dto.StudentId);
+
+            if (exam is null)
+                throw new DomainException("Selected exam doesn't exist.");
+
+            if (student is null)
+                throw new DomainException("Selected student doesn't exist.");
+
+            var studentDepartment = await repository.GetDepartmentByIdAsync(student.DepartmentId);
+            var examDepartment = await repository.GetDepartmentByIdAsync(exam.DepartmentId);
+
+            // Updating the DTO
+            dto.StudentName = student.StudentName;
+            dto.RollNumber = student.RollNumber;
+            dto.StudentDepartmentName = studentDepartment!.Name;
+
+            dto.ExamType = exam.Type;
+            dto.ExamDepartmentName = examDepartment!.Name;
+            dto.TotalMarks = exam.TotalMarks;
+            dto.DateOfConduct = exam.ConductedDate;
+
+            dto.Percentage = (double)(dto.ObtainedMarks / dto.TotalMarks) * 100.0;
+
+            return dto;
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace StudentInsight.Services.Implementation
             await repository.AddAsync(student, false);
 
             // Update the department "Total Students" count
-            await repository.UpdateDepartmentStudentsCount(dto.DepartmentId);
+            await repository.UpdateDepartmentStudentsCount(dto.DepartmentId, 1);
             
             await repository.SaveChangesAsync();
             return StudentMapper.ToDto(student);
@@ -32,19 +32,21 @@ namespace StudentInsight.Services.Implementation
         {
             await repository.AddBulkAsync(dtos.Select(StudentMapper.ToEntity).ToList(), false);
 
-            Dictionary<Guid, bool> map = new();
+            Dictionary<Guid, bool> map = [];
             foreach (var dto in dtos)
             {
-                // Get all students based on the department
-                var students = await repository.GetAllAsync(new()
-                {
-                    DepartmentId = dto.DepartmentId
-                });
-
-                // Update students count
                 if (!map.ContainsKey(dto.DepartmentId))
                 {
+                    // Get all students based on the department
+                    var students = await repository.GetAllAsync(new()
+                    {
+                        DepartmentId = dto.DepartmentId
+                    });
+
+                    // Update students count for the department
                     await repository.UpdateDepartmentStudentsCount(dto.DepartmentId, students.TotalCount);
+                    
+                    // Add the id to dictionary
                     map[dto.DepartmentId] = true;
                 }
             }

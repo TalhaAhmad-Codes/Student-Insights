@@ -23,6 +23,34 @@ namespace StudentInsight.Controllers
             return Ok(result);
         }
 
+        [HttpGet("detailed")]
+        public async Task<IActionResult> GetAllDetailedAsync([FromQuery] StudentExamLogsFilterDto filterDto)
+        {
+            try
+            {
+                var result = await service.GetAllDetailedAsync(filterDto);
+                return Ok(result);
+            }
+            catch (DomainException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("detailed/{id:guid}")]
+        public async Task<IActionResult> GetDetailedByIdAsync(Guid id)
+        {
+            try
+            {
+                var log = await service.GetDetailedByIdAsync(id);
+                return log is null ? NotFound() : Ok(log);
+            }
+            catch (DomainException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
