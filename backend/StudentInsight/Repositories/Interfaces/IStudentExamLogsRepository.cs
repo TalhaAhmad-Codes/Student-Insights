@@ -7,7 +7,11 @@ namespace StudentInsight.Repositories.Interfaces
     public interface IStudentExamLogsRepository : IGeneralRepository<StudentExamLogs>
     {
         Task<PagedResultDto<StudentExamLogs>> GetAllAsync(StudentExamLogsFilterDto filterDto);
-        
+
+        Task<Student?> GetStudentByIdAsync(Guid id);
+        Task<Exam?> GetExamByIdAsync(Guid id);
+        Task<Department?> GetDepartmentByIdAsync(Guid id);
+
         Task<int> GetTotalMarks(Guid examId);
         Task<bool> IsValidObtainedMarks(StudentExamLogs log, int totalMarks);
 

@@ -144,7 +144,7 @@ namespace StudentInsight.Data
                 // Conducted Date
                 builder.Property(e => e.ConductedDate)
                        .IsRequired()
-                       .HasColumnName("ConductedDate");
+                       .HasColumnName("DateOfConduct");
 
                 /* ----- Relations ----- */
 
