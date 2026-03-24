@@ -126,18 +126,19 @@ namespace StudentInsight.Services.Implementation
             var result = await repository.GetAllAsync(filterDto);
 
             // Converting from Entity -> Detailed DTO
-            PagedResultDto<StudentExamLogsDetailedResponseDto> pagedDtos = new()
-            {
-                TotalCount = result.TotalCount
-            };
+            List<StudentExamLogsDetailedResponseDto> pagedDtos = [];
 
             foreach (var log in result.Items)
             {
                 var dto = await GetDetailedByIdAsync(log.Id);
-                pagedDtos.Items.Add(dto!);
+                pagedDtos.Add(dto!);
             }
 
-            return pagedDtos;
+            return new PagedResultDto<StudentExamLogsDetailedResponseDto>
+            {
+                Items = pagedDtos,
+                TotalCount = result.TotalCount
+            };
         }
 
         public async Task<StudentExamLogsDetailedResponseDto?> GetDetailedByIdAsync(Guid id)
