@@ -44,6 +44,15 @@ namespace StudentInsight.Repositories.Implementation
             };
         }
 
+        public async Task<Department?> GetDepartmentByIdAsync(Guid id)
+            => await dbContext.Departments.FindAsync(id);
+
+        public async Task<Exam?> GetExamByIdAsync(Guid id)
+            => await dbContext.Exams.FindAsync(id);
+
+        public async Task<Student?> GetStudentByIdAsync(Guid id)
+            => await dbContext.Students.FindAsync(id);
+
         public async Task<int> GetTotalMarks(Guid examId)
         {
             var exam = await dbContext.Exams.FindAsync(examId);
