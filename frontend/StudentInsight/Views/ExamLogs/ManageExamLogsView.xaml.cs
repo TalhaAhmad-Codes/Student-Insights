@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace StudentInsight.Views
+namespace StudentInsight.Views.ExamLogs
 {
     /// <summary>
-    /// Interaction logic for TemplateView.xaml
+    /// Interaction logic for ManageExamLogsView.xaml
     /// </summary>
-    public partial class TemplateView : UserControl
+    public partial class ManageExamLogsView : UserControl
     {
-        public TemplateView()
+        public ManageExamLogsView()
         {
             InitializeComponent();
         }
