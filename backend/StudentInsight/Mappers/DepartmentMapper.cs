@@ -11,6 +11,7 @@ namespace StudentInsight.Mappers
                 CreatorUserId = department.CreatorUserId,
                 Id = department.Id,
                 Name = department.Name,
+                TotalStudents = department.TotalStudents,
                 CreatedAt = department.CreatedAt
             };
 
@@ -18,7 +19,7 @@ namespace StudentInsight.Mappers
             => new()
             {
                 CreatorUserId = dto.CreatorUserId,
-                Name = dto.Name,
+                Name = dto.Name
             };
     }
 }

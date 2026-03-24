@@ -7,6 +7,7 @@ namespace StudentInsight.Entities
     {
         public ExamType Type { get; set; }
         public int TotalMarks { get; set; }
+        public int TotalStudentsEnrolled { get; set; } = 0;
         public DateOnly ConductedDate { get; set; }
 
         // Foreign Keys

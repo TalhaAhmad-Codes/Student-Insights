@@ -3,10 +3,10 @@
     public interface IGeneralRepository<Entity> where Entity : class
     {
         Task<Entity?> GetByIdAsync(Guid id);
-        Task AddAsync(Entity entity);
-        Task AddBulkAsync(List<Entity> entities);
-        Task RemoveAsync(Entity entity);
-        Task UpdateAsync(Entity entity);
+        Task AddAsync(Entity entity, bool canSave = true);
+        Task AddBulkAsync(List<Entity> entities, bool canSave = true);
+        Task RemoveAsync(Entity entity, bool canSave = true);
+        Task UpdateAsync(Entity entity, bool canSave = true);
         Task SaveChangesAsync();
     }
 }

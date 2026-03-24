@@ -12,6 +12,7 @@ namespace StudentInsight.Mappers
                 Id = exam.Id,
                 Type = exam.Type,
                 TotalMarks = exam.TotalMarks,
+                TotalStudentsEnrolled = exam.TotalStudentsEnrolled,
                 DepartmentId = exam.DepartmentId,
                 ConductedDate = exam.ConductedDate,
                 CreatedAt = exam.CreatedAt

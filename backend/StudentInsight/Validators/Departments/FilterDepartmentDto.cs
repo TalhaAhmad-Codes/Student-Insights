@@ -9,7 +9,8 @@ namespace StudentInsight.Validators.Departments
         public FilterDepartmentDto()
         {
             RuleFor(s => s.CreatorUserId)
-                .NotEmpty();
+                .NotEmpty()
+                .When(s => s.CreatorUserId.HasValue);
 
             RuleFor(s => s.Name)
                 .NotEmpty()
