@@ -182,6 +182,14 @@ class StudentExamLogs:
         def by_id(_id: UUID) -> str:
             return f"{StudentExamLogs.ENDPOINT}/{_id}"
 
+        @staticmethod
+        def all_detailed() -> str:
+            return  f"{StudentExamLogs.ENDPOINT}/detailed"
+
+        @staticmethod
+        def by_id_detailed(_id: UUID) -> str:
+            return f"{StudentExamLogs.ENDPOINT}/detailed/{_id}"
+
     # POST
     class Post:
         @staticmethod
