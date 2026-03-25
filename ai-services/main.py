@@ -1,10 +1,13 @@
-from api.services.student_exam_logs_service import StudentExamLogsService
+from api.services.student_service import StudentService
+from api.services.user_service import UserService
+from rich import print as display
 
 if __name__ == '__main__':
     try:
-        print(StudentExamLogsService.get_all_detailed())
+        result = UserService.get_all()
+        display(result)
     except Exception as e:
-        print("Check your network connection / host.", f"Details: {e}", sep='\n\n')
+        print("Check your network connection / server.", f"Details:\n{e}", sep='\n\n')
 
 """
 import argparse as ap
