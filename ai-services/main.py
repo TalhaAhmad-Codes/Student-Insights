@@ -1,3 +1,12 @@
+from api.services.student_exam_logs_service import StudentExamLogsService
+
+if __name__ == '__main__':
+    try:
+        print(StudentExamLogsService.get_all_detailed())
+    except Exception as e:
+        print("Check your network connection / host.", f"Details: {e}", sep='\n\n')
+
+"""
 import argparse as ap
 
 parser = ap.ArgumentParser()
@@ -16,3 +25,4 @@ for count in range(args.times):
         print(args.msg)
     else:
         print(args.msg, args.name)
+"""

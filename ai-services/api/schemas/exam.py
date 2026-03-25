@@ -1,0 +1,35 @@
+from api.schemas.common.base import BaseDTO, BaseCreatorResponseDTO, BaseCreatorCreateDTO, UUID
+from api.schemas.common.filter import BaseCreatorFilterDTO
+from misc.enums import ExamType
+from datetime import date
+
+# Exam - To get response
+class ExamResponseDTO(BaseCreatorResponseDTO):
+    type: ExamType
+    totalMarks: int
+    totalStudentsEnrolled: int
+    conductedDate: date
+    departmentId: UUID
+
+# Exam - To create
+class ExamCreateDTO(BaseCreatorCreateDTO):
+    type: ExamType
+    totalMarks: int
+    conductedDate: date
+    departmentId: UUID
+
+# Exam - To filter
+class ExamFilterDTO(BaseCreatorFilterDTO):
+    type: ExamType | None = None
+    minTotalMarks: int | None = None
+    maxTotalMarks: int | None = None
+    fromConductedDate: date | None = None
+    toConductedDate: date | None = None
+    departmentId: UUID | None = None
+
+# Exam - To create
+class ExamUpdateDTO(BaseDTO):
+    type: ExamType
+    totalMarks: int
+    conductedDate: date
+    departmentId: UUID
