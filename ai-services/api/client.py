@@ -17,8 +17,13 @@ class ApiClient:
         if obj is None:
             return None
 
-        if hasattr(obj, "to_dict"):
-            return obj.to_dict()
+        # handle list of DTOs
+        if isinstance(obj, list):
+            return [self._serialize(x) for x in obj]
+
+        # handle Pydantic
+        if hasattr(obj, "model_dump"):
+            return obj.model_dump(exclude_none=True)
 
         return obj
 

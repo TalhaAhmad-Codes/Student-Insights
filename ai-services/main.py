@@ -1,13 +1,12 @@
-from api.services.student_service import StudentService
 from api.services.user_service import UserService
-from rich import print as display
 
 if __name__ == '__main__':
     try:
-        result = UserService.get_all()
-        display(result)
+        dtos = UserService.get_all()
+        for dto in dtos:
+            print(dto.username, dto.email, sep=' --- ')
     except Exception as e:
-        print("Check your network connection / server.", f"Details:\n{e}", sep='\n\n')
+        print("Error:", f"{e}", sep='\n')
 
 """
 import argparse as ap

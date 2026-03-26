@@ -1,8 +1,8 @@
-from api.schemas.common.base import BaseDTO, BaseCreatorResponseDTO, BaseCreatorCreateDTO, UUID
+from api.schemas.common.base import BaseDTO, BaseCreatorResponseDTO, BaseCreatorCreateDTO
 from api.schemas.common.filter import BaseCreatorFilterDTO
 
 # Department - To get response
-class DepartmentResponseResponseDTO(BaseCreatorResponseDTO):
+class DepartmentResponseDTO(BaseCreatorResponseDTO):
     name: str
     totalStudents: int
 

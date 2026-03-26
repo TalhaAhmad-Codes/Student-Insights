@@ -9,14 +9,14 @@ class ExamResponseDTO(BaseCreatorResponseDTO):
     totalMarks: int
     totalStudentsEnrolled: int
     conductedDate: date
-    departmentId: UUID
+    departmentId: UUID | str
 
 # Exam - To create
 class ExamCreateDTO(BaseCreatorCreateDTO):
     type: ExamType
     totalMarks: int
     conductedDate: date
-    departmentId: UUID
+    departmentId: UUID | str
 
 # Exam - To filter
 class ExamFilterDTO(BaseCreatorFilterDTO):
@@ -25,11 +25,11 @@ class ExamFilterDTO(BaseCreatorFilterDTO):
     maxTotalMarks: int | None = None
     fromConductedDate: date | None = None
     toConductedDate: date | None = None
-    departmentId: UUID | None = None
+    departmentId: UUID | str | None = None
 
 # Exam - To create
 class ExamUpdateDTO(BaseDTO):
     type: ExamType
     totalMarks: int
     conductedDate: date
-    departmentId: UUID
+    departmentId: UUID | str

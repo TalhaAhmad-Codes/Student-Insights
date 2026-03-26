@@ -8,8 +8,8 @@ class StudentExamLogsResponseDTO(BaseCreatorResponseDTO):
     obtainedMarks: int
     status: ExamStatus
     note: str | None
-    studentId: UUID
-    examId: UUID
+    studentId: UUID | str
+    examId: UUID | str
 
 # Student Exam Logs - To get detailed response
 class StudentExamLogsDetailedResponseDTO(StudentExamLogsResponseDTO):
@@ -28,21 +28,21 @@ class StudentExamLogsCreateDTO(BaseCreatorCreateDTO):
     obtainedMarks: int
     note: str | None
     status: ExamStatus
-    studentId: UUID
-    examId: UUID
+    studentId: UUID | str
+    examId: UUID | str
 
 # Student Exam Logs - To filter
 class StudentExamLogsDTO(BaseCreatorFilterDTO):
     minObtainedMarks: int | None = None
     maxObtainedMarks: int | None = None
     status: ExamStatus | None = None
-    studentId: UUID | None = None
-    examId: UUID | None = None
+    studentId: UUID | str | None = None
+    examId: UUID | str | None = None
 
 # Student Exam Logs - To update
 class StudentExamLogsUpdateDTO(BaseDTO):
     obtainedMarks: int
     note: str | None
     status: ExamStatus
-    studentId: UUID
-    examId: UUID
+    studentId: UUID | str
+    examId: UUID | str

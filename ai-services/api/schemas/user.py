@@ -1,16 +1,17 @@
 from api.schemas.common.base import BaseDTO, BaseAuditableDTO
 from api.schemas.common.filter import BaseFilterDTO
-
+from typing import List, Optional
+from pydantic import BaseModel
 
 # User - To get the response
 class UserResponseDTO(BaseAuditableDTO):
-    profilePic: list | None
+    profilePic: Optional[List] | None
     username: str
     email: str
 
 # User - To create
-class UserCreateDTO:
-    profilePic: list | None = None
+class UserCreateDTO(BaseModel):
+    profilePic: Optional[List] = None
     username: str
     email: str
     password: str
@@ -22,7 +23,7 @@ class UserFilterDTO(BaseFilterDTO):
 # User - To update/patch
 class UserUpdateDTOs:
     class UpdateProfilePic(BaseDTO):
-        profilePic: list | None
+        profilePic: Optional[List]
 
     class UpdateUsername(BaseDTO):
         username: str

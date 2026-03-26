@@ -4,12 +4,12 @@ from datetime import date
 
 
 # Student - To get response
-class StudentResponseResponseDTO(BaseCreatorResponseDTO):
+class StudentResponseDTO(BaseCreatorResponseDTO):
     studentName: str
     fatherName: str
     rollNumber: int
     dateOfBirth: date
-    departmentId: UUID
+    departmentId: UUID | str
 
 # Student - To create
 class StudentCreateDTO(BaseCreatorCreateDTO):
@@ -17,14 +17,14 @@ class StudentCreateDTO(BaseCreatorCreateDTO):
     fatherName: str
     rollNumber: int
     dateOfBirth: date
-    departmentId: UUID
+    departmentId: UUID | str
 
 # Student - To filter
 class StudentFilterDTO(BaseCreatorFilterDTO):
     fromRollNumber: int | None = None
     toRollNumber: int | None = None
     dateOfBirth: date | None = None
-    departmentId: UUID | None = None
+    departmentId: UUID | str | None = None
 
 # Student - To update
 class StudentUpdateDTO(BaseDTO):
@@ -32,4 +32,4 @@ class StudentUpdateDTO(BaseDTO):
     fatherName: str
     rollNumber: int
     dateOfBirth: date
-    departmentId: UUID
+    departmentId: UUID | str
