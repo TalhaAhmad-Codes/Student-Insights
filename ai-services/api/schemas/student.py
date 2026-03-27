@@ -1,7 +1,7 @@
 from api.schemas.common.base import BaseDTO, BaseCreatorResponseDTO, BaseCreatorCreateDTO, UUID
 from api.schemas.common.filter import BaseCreatorFilterDTO
+from pydantic import BaseModel
 from datetime import date
-
 
 # Student - To get response
 class StudentResponseDTO(BaseCreatorResponseDTO):
@@ -12,7 +12,8 @@ class StudentResponseDTO(BaseCreatorResponseDTO):
     departmentId: UUID | str
 
 # Student - To create
-class StudentCreateDTO(BaseCreatorCreateDTO):
+class StudentCreateDTO(BaseModel):
+    creatorUserId: UUID | str
     studentName: str
     fatherName: str
     rollNumber: int

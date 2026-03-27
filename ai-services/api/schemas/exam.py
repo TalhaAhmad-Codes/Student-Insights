@@ -1,6 +1,7 @@
 from api.schemas.common.base import BaseDTO, BaseCreatorResponseDTO, BaseCreatorCreateDTO, UUID
 from api.schemas.common.filter import BaseCreatorFilterDTO
 from misc.enums import ExamType
+from pydantic import BaseModel
 from datetime import date
 
 # Exam - To get response
@@ -12,10 +13,11 @@ class ExamResponseDTO(BaseCreatorResponseDTO):
     departmentId: UUID | str
 
 # Exam - To create
-class ExamCreateDTO(BaseCreatorCreateDTO):
+class ExamCreateDTO(BaseModel):
+    creatorUserId: UUID | str
     type: ExamType
     totalMarks: int
-    conductedDate: date
+    conductedDate: date | str
     departmentId: UUID | str
 
 # Exam - To filter
