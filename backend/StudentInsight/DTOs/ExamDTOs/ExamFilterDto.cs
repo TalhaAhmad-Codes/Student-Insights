@@ -10,6 +10,6 @@ namespace StudentInsight.DTOs.ExamDTOs
         public int? MaxTotalMarks { get; init; }
         public DateOnly? FromConductedDate { get; init; }
         public DateOnly? ToConductedDate { get; init; }
-        public Guid? DepartmentId { get; init; }
+        public Guid? SubjectId { get; init; }
     }
 }

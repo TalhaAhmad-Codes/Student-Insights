@@ -18,17 +18,17 @@ namespace StudentInsight.Repositories.Implementation
             if (filterDto.CreatorUserId.HasValue)
                 query = query.Where(e => e.CreatorUserId == filterDto.CreatorUserId);
 
-            if (filterDto.DepartmentId.HasValue)
-                query = query.Where(e => e.DepartmentId == filterDto.DepartmentId);
+            if (filterDto.SubjectId.HasValue)
+                query = query.Where(e => e.SubjectId == filterDto.SubjectId);
 
             if (filterDto.Type.HasValue)
                 query = query.Where(e => e.Type == filterDto.Type);
 
             if (filterDto.FromConductedDate.HasValue)
-                query = query.Where(e => e.ConductedDate >= filterDto.FromConductedDate);
+                query = query.Where(e => e.DateOfConduct >= filterDto.FromConductedDate);
 
             if (filterDto.ToConductedDate.HasValue)
-                query = query.Where(e => e.ConductedDate <= filterDto.ToConductedDate);
+                query = query.Where(e => e.DateOfConduct <= filterDto.ToConductedDate);
 
             if (filterDto.MinTotalMarks.HasValue)
                 query = query.Where(e => e.TotalMarks >= filterDto.MinTotalMarks);

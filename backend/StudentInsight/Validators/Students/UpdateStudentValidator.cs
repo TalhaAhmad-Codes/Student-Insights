@@ -19,9 +19,6 @@ namespace StudentInsight.Validators.Students
                 .NotEmpty()
                 .MaximumLength(MaxLength.PersonName);
 
-            RuleFor(s => s.DepartmentId)
-                .NotEmpty();
-
             RuleFor(s => s.RollNumber)
                 .GreaterThan(0);
 

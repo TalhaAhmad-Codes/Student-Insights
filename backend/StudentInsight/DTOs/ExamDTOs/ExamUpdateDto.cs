@@ -7,7 +7,7 @@ namespace StudentInsight.DTOs.ExamDTOs
     {
         public ExamType Type { get; init; }
         public int TotalMarks { get; init; }
-        public DateOnly ConductedDate { get; init; }
-        public Guid DepartmentId { get; init; }
+        public DateOnly DateOfConduct { get; init; }
+        public Guid SubjectId { get; init; }
     }
 }

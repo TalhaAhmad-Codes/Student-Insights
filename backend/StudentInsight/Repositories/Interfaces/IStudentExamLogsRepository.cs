@@ -10,7 +10,7 @@ namespace StudentInsight.Repositories.Interfaces
 
         Task<Student?> GetStudentByIdAsync(Guid id);
         Task<Exam?> GetExamByIdAsync(Guid id);
-        Task<Department?> GetDepartmentByIdAsync(Guid id);
+        Task<Subject?> GetSubjectByIdAsync(Guid id);
 
         Task<int> GetTotalMarks(Guid examId);
         Task<bool> IsValidObtainedMarks(StudentExamLogs log, int totalMarks);

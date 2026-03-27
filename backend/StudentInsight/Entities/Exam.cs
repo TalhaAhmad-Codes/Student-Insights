@@ -8,13 +8,13 @@ namespace StudentInsight.Entities
         public ExamType Type { get; set; }
         public int TotalMarks { get; set; }
         public int TotalStudentsEnrolled { get; set; } = 0;
-        public DateOnly ConductedDate { get; set; }
+        public DateOnly DateOfConduct { get; set; }
 
         // Foreign Keys
-        public Guid DepartmentId { get; set; }
+        public Guid SubjectId { get; set; }
         
         // Navigation
-        public Department Department { get; set; }
+        public Subject Subject { get; set; }
         public ICollection<StudentExamLogs> StudentExamLogs { get; set; }
     }
 }

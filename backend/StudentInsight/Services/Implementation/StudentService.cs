@@ -19,39 +19,13 @@ namespace StudentInsight.Services.Implementation
         {
             var student = StudentMapper.ToEntity(dto);
             
-            await repository.AddAsync(student, false);
-
-            // Update the department "Total Students" count
-            await repository.UpdateDepartmentStudentsCount(dto.DepartmentId, 1);
-            
-            await repository.SaveChangesAsync();
+            await repository.AddAsync(student);
             return StudentMapper.ToDto(student);
         }
 
         public async Task CreateBulkAsync(List<StudentCreateDto> dtos)
         {
-            await repository.AddBulkAsync(dtos.Select(StudentMapper.ToEntity).ToList(), false);
-
-            Dictionary<Guid, bool> map = [];
-            foreach (var dto in dtos)
-            {
-                if (!map.ContainsKey(dto.DepartmentId))
-                {
-                    // Get all students based on the department
-                    var students = await repository.GetAllAsync(new()
-                    {
-                        DepartmentId = dto.DepartmentId
-                    });
-
-                    // Update students count for the department
-                    await repository.UpdateDepartmentStudentsCount(dto.DepartmentId, students.TotalCount);
-                    
-                    // Add the id to dictionary
-                    map[dto.DepartmentId] = true;
-                }
-            }
-
-            await repository.SaveChangesAsync();
+            await repository.AddBulkAsync(dtos.Select(StudentMapper.ToEntity).ToList());
         }
 
         public async Task<PagedResultDto<StudentResponseDto>> GetAllAsync(StudentFilterDto filterDto)
@@ -79,10 +53,7 @@ namespace StudentInsight.Services.Implementation
             if (student is null)
                 return false;
 
-            await repository.UpdateDepartmentStudentsCount(student.DepartmentId, -1);   // Removes a student count
-            await repository.RemoveAsync(student, false);
-
-            await repository.SaveChangesAsync();
+            await repository.RemoveAsync(student);
             return true;
         }
 
@@ -93,25 +64,12 @@ namespace StudentInsight.Services.Implementation
             if (student is null)
                 return false;
 
-            // Update the student count if department has been changed by user
-            if (student.DepartmentId != dto.DepartmentId)
-            {
-                // Remove student (count) from previous department
-                await repository.UpdateDepartmentStudentsCount(student.DepartmentId, -1);
-
-                // Add student (count) to new department
-                await repository.UpdateDepartmentStudentsCount(dto.DepartmentId, 1);
-            }
-
             student.StudentName = dto.StudentName;
             student.FatherName = dto.FatherName;
             student.RollNumber = dto.RollNumber;
-            student.DepartmentId = dto.DepartmentId;
             student.DateOfBirth = dto.DateOfBirth;
 
-            await repository.UpdateAsync(student, false);
-
-            await repository.SaveChangesAsync();
+            await repository.UpdateAsync(student);
             return true;
         }
     }

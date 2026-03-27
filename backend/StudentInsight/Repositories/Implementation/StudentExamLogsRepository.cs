@@ -44,14 +44,16 @@ namespace StudentInsight.Repositories.Implementation
             };
         }
 
-        public async Task<Department?> GetDepartmentByIdAsync(Guid id)
-            => await dbContext.Departments.FindAsync(id);
-
         public async Task<Exam?> GetExamByIdAsync(Guid id)
             => await dbContext.Exams.FindAsync(id);
 
         public async Task<Student?> GetStudentByIdAsync(Guid id)
             => await dbContext.Students.FindAsync(id);
+
+        public async Task<Subject?> GetSubjectByIdAsync(Guid id)
+        {
+            return await dbContext.Subjects.FindAsync(id);
+        }
 
         public async Task<int> GetTotalMarks(Guid examId)
         {
@@ -79,7 +81,6 @@ namespace StudentInsight.Repositories.Implementation
 
             exam.TotalStudentsEnrolled = await students.CountAsync();
             dbContext.Exams.Update(exam);
-            //await SaveChangesAsync();
         }
 
         public async Task UpdateExamTotalStudentsEnrolled(Guid examId, int count)
@@ -98,7 +99,6 @@ namespace StudentInsight.Repositories.Implementation
 
             exam.TotalStudentsEnrolled += count;
             dbContext.Exams.Update(exam);
-            //await SaveChangesAsync();
         }
     }
 }

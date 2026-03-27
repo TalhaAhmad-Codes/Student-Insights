@@ -11,7 +11,7 @@ namespace StudentInsight.Entities
 
         // Navigation
         public ICollection<Student> Students { get; set; }
-        public ICollection<Department> Departments { get; set; }
+        public ICollection<Subject> Subjects { get; set; }
         public ICollection<Exam> Exams { get; set; }
         public ICollection<StudentExamLogs> StudentExamLogs { get; set; }
     }

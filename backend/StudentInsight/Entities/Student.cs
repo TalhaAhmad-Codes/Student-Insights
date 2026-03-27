@@ -9,11 +9,7 @@ namespace StudentInsight.Entities
         public int RollNumber { get; set; }
         public DateOnly DateOfBirth { get; set; }
 
-        // Foriegn Keys
-        public Guid DepartmentId { get; set; }
-
         // Navigation
-        public Department Department { get; set; }
         public ICollection<StudentExamLogs> StudentExamLogs { get; set; }
     }
 }

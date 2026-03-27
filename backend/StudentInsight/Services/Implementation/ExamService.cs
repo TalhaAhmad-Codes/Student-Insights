@@ -66,8 +66,8 @@ namespace StudentInsight.Services.Implementation
 
             exam.TotalMarks = dto.TotalMarks;
             exam.Type = dto.Type;
-            exam.ConductedDate = dto.ConductedDate;
-            exam.DepartmentId = dto.DepartmentId;
+            exam.DateOfConduct = dto.DateOfConduct;
+            exam.SubjectId = dto.SubjectId;
 
             await repository.UpdateAsync(exam);
             return true;

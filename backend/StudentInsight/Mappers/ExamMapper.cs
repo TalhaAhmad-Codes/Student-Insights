@@ -13,8 +13,8 @@ namespace StudentInsight.Mappers
                 Type = exam.Type,
                 TotalMarks = exam.TotalMarks,
                 TotalStudentsEnrolled = exam.TotalStudentsEnrolled,
-                DepartmentId = exam.DepartmentId,
-                ConductedDate = exam.ConductedDate,
+                SubjectId = exam.SubjectId,
+                DateOfConduct = exam.DateOfConduct,
                 CreatedAt = exam.CreatedAt
             };
 
@@ -24,8 +24,8 @@ namespace StudentInsight.Mappers
                 CreatorUserId = dto.CreatorUserId,
                 Type = dto.Type,
                 TotalMarks = dto.TotalMarks,
-                DepartmentId = dto.DepartmentId,
-                ConductedDate = dto.ConductedDate
+                SubjectId = dto.SubjectId,
+                DateOfConduct = dto.DateOfConduct
             };
     }
 }

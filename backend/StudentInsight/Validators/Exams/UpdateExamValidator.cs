@@ -10,7 +10,7 @@ namespace StudentInsight.Validators.Exams
             RuleFor(e => e.Id)
                 .NotEmpty();
 
-            RuleFor(e => e.DepartmentId)
+            RuleFor(e => e.SubjectId)
                 .NotEmpty();
 
             RuleFor(e => e.TotalMarks)

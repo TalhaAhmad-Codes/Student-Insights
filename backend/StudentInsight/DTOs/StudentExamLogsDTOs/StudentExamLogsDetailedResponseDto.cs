@@ -7,12 +7,11 @@ namespace StudentInsight.DTOs.StudentExamLogsDTOs
         // Student
         public string StudentName { get; set; }
         public int RollNumber { get; set; }
-        public string StudentDepartmentName { get; set; }
-        public double Percentage { get; set; }
+        public float Percentage { get; set; }
 
         // Exam
         public ExamType ExamType { get; set; }
-        public string ExamDepartmentName { get; set; }
+        public string SubjectName { get; set; }
         public int TotalMarks { get; set; }
         public DateOnly DateOfConduct { get; set; }
     }

@@ -161,20 +161,18 @@ namespace StudentInsight.Services.Implementation
             if (student is null)
                 throw new DomainException("Selected student doesn't exist.");
 
-            var studentDepartment = await repository.GetDepartmentByIdAsync(student.DepartmentId);
-            var examDepartment = await repository.GetDepartmentByIdAsync(exam.DepartmentId);
+            var subject = await repository.GetSubjectByIdAsync(exam.SubjectId);
 
             // Updating the DTO
             dto.StudentName = student.StudentName;
             dto.RollNumber = student.RollNumber;
-            dto.StudentDepartmentName = studentDepartment!.Name;
 
             dto.ExamType = exam.Type;
-            dto.ExamDepartmentName = examDepartment!.Name;
+            dto.StudentName = subject!.Name;
             dto.TotalMarks = exam.TotalMarks;
-            dto.DateOfConduct = exam.ConductedDate;
+            dto.DateOfConduct = exam.DateOfConduct;
 
-            dto.Percentage = (double)(dto.ObtainedMarks / dto.TotalMarks) * 100.0;
+            dto.Percentage = (float) (dto.ObtainedMarks / dto.TotalMarks) * 100.0f;
 
             return dto;
         }

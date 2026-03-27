@@ -6,6 +6,7 @@
         public static int Email => 150;
         public static int PersonName => 50;
         public static int DepartmentName => 75;
+        public static int SubjectName => 70;
         public static int SELNote => 150;
     }
 

@@ -1,20 +1,20 @@
 ﻿using FluentValidation;
-using StudentInsight.DTOs.DepartmentDTOs;
+using StudentInsight.DTOs.SubjectDTOs;
 using StudentInsight.Validators.Length;
 
-namespace StudentInsight.Validators.Departments
+namespace StudentInsight.Validators.Subject
 {
-    public class FilterDepartmentDto : AbstractValidator<DepartmentFilterDto>
+    public class FilterSubjectValidator : AbstractValidator<SubjectFilterDto>
     {
-        public FilterDepartmentDto()
+        public FilterSubjectValidator()
         {
             RuleFor(s => s.CreatorUserId)
                 .NotEmpty()
                 .When(s => s.CreatorUserId.HasValue);
 
             RuleFor(s => s.Name)
+                .MaximumLength(MaxLength.SubjectName)
                 .NotEmpty()
-                .MaximumLength(MaxLength.DepartmentName)
                 .When(s => s.Name != null);
 
             RuleFor(s => s.PageNumber)

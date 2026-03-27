@@ -13,7 +13,6 @@ namespace StudentInsight.Mappers
                 RollNumber = student.RollNumber,
                 StudentName = student.StudentName,
                 FatherName = student.FatherName,
-                DepartmentId = student.DepartmentId,
                 DateOfBirth = student.DateOfBirth,
                 CreatedAt = student.CreatedAt
             };
@@ -25,7 +24,6 @@ namespace StudentInsight.Mappers
                 RollNumber = dto.RollNumber,
                 StudentName = dto.StudentName,
                 FatherName = dto.FatherName,
-                DepartmentId = dto.DepartmentId,
                 DateOfBirth = dto.DateOfBirth
             };
     }

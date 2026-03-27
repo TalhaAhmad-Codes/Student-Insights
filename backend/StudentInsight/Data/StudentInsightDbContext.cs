@@ -11,8 +11,8 @@ namespace StudentInsight.Data
         /*/ <----- DbSets -----> /*/
         public DbSet<User> Users => Set<User>();
         public DbSet<Student> Students => Set<Student>();
-        public DbSet<Department> Departments => Set<Department>();
         public DbSet<Exam> Exams => Set<Exam>();
+        public DbSet<Subject> Subjects => Set<Subject>();
         public DbSet<StudentExamLogs> StudentExamLogs => Set<StudentExamLogs>();
 
         // Model building - Configurations
@@ -66,16 +66,13 @@ namespace StudentInsight.Data
                        .IsRequired()
                        .HasColumnName("RollNumber");
 
-                builder.HasIndex(s => new { s.RollNumber, s.DepartmentId })
+                builder.HasIndex(s => s.RollNumber)
                        .IsUnique();
 
                 // Date of Birth
                 builder.Property(s => s.DateOfBirth)
                        .IsRequired()
                        .HasColumnName("DOB");
-
-                // Department
-                builder.HasIndex(s => s.DepartmentId);
 
                 /* ----- Relations ----- */
 
@@ -84,42 +81,27 @@ namespace StudentInsight.Data
                        .WithMany(u => u.Students)
                        .HasForeignKey(s => s.CreatorUserId)
                        .OnDelete(DeleteBehavior.Restrict);
-
-                // Students <-> Department
-                builder.HasOne(s => s.Department)
-                       .WithMany(d => d.Students)
-                       .HasForeignKey(s => s.DepartmentId)
-                       .OnDelete(DeleteBehavior.Restrict);
             });
 
-            /*/ <----- Department - Configuration -----> /*/
-            modelBuilder.Entity<Department>(builder =>
+            /*/ <----- Subject - Configuration -----> /*/
+            modelBuilder.Entity<Subject>(builder =>
             {
                 // Name
-                builder.Property(d => d.Name)
+                builder.Property(s => s.Name)
                        .IsRequired()
-                       .HasMaxLength(MaxLength.DepartmentName)
+                       .HasMaxLength(MaxLength.SubjectName)
                        .HasColumnName("Name");
 
-                builder.HasIndex(d => new { d.Name, d.CreatorUserId })
+                // Unique name per user
+                builder.HasIndex(s => new { s.Name, s.CreatorUserId })
                        .IsUnique();
-
-                // Total Students
-                builder.Property(d => d.TotalStudents)
-                       .IsRequired()
-                       .HasColumnName("TotalStudents");
 
                 /* ----- Relations ----- */
 
-                // Departments <-> User
-                builder.HasOne(d => d.CreatorUser)
-                       .WithMany(u => u.Departments)
-                       .HasForeignKey(d => d.CreatorUserId)
-                       .OnDelete(DeleteBehavior.Restrict);
-
-                // Department <-> Students
-                builder.HasMany(d => d.Students)
-                       .WithOne(s => s.Department)
+                // Subjects <-> User
+                builder.HasOne(s => s.CreatorUser)
+                       .WithMany(u => u.Subjects)
+                       .HasForeignKey(s => s.CreatorUserId)
                        .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -142,7 +124,7 @@ namespace StudentInsight.Data
                        .HasColumnName("StudentsEnrolled");
 
                 // Conducted Date
-                builder.Property(e => e.ConductedDate)
+                builder.Property(e => e.DateOfConduct)
                        .IsRequired()
                        .HasColumnName("DateOfConduct");
 
@@ -154,10 +136,10 @@ namespace StudentInsight.Data
                        .HasForeignKey(e => e.CreatorUserId)
                        .OnDelete(DeleteBehavior.Restrict);
 
-                // Exams <-> Department
-                builder.HasOne(e => e.Department)
+                // Exams <-> Subject
+                builder.HasOne(e => e.Subject)
                        .WithMany(d => d.Exams)
-                       .HasForeignKey(e => e.DepartmentId)
+                       .HasForeignKey(e => e.SubjectId)
                        .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -182,12 +164,6 @@ namespace StudentInsight.Data
                 // Prevent duplicate logs
                 builder.HasIndex(l => new { l.StudentId, l.ExamId })
                        .IsUnique();
-
-                // Exam
-                builder.HasIndex(l => l.ExamId);
-
-                // Student
-                builder.HasIndex(l => l.StudentId);
 
                 /* ----- Relations ----- */
 

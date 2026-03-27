@@ -11,9 +11,9 @@ namespace StudentInsight.Validators.Exams
                 .NotEmpty()
                 .When(s => s.CreatorUserId.HasValue);
 
-            RuleFor(e => e.DepartmentId)
+            RuleFor(e => e.SubjectId)
                 .NotEmpty()
-                .When(e => e.DepartmentId.HasValue);
+                .When(e => e.SubjectId.HasValue);
 
             RuleFor(e => e.MinTotalMarks)
                 .GreaterThan(0)

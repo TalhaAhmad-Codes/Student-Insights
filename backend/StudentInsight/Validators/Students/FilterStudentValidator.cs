@@ -11,10 +11,6 @@ namespace StudentInsight.Validators.Students
                 .NotEmpty()
                 .When(s => s.CreatorUserId.HasValue);
 
-            RuleFor(s => s.DepartmentId)
-                .NotEmpty()
-                .When(s => s.DepartmentId.HasValue);
-
             RuleFor(s => s.FromRollNumber)
                 .GreaterThan(0)
                 .When(s => s.FromRollNumber.HasValue);

@@ -19,6 +19,5 @@ namespace StudentInsight.DTOs.StudentDTOs
         }
         public int RollNumber { get; init; }
         public DateOnly DateOfBirth { get; init; }
-        public Guid DepartmentId { get; init; }
     }
 }
