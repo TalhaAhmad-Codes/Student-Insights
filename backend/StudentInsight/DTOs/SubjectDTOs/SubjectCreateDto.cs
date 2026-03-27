@@ -4,6 +4,12 @@ namespace StudentInsight.DTOs.SubjectDTOs
 {
     public sealed class SubjectCreateDto : BaseCreatorCreateDto
     {
-        public string Name { get; init; }
+        private string name;
+        
+        public string Name
+        {
+            get => name;
+            init => name = value.Trim().ToLower();
+        }
     }
 }

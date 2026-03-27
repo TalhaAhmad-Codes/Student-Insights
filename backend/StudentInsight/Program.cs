@@ -29,12 +29,14 @@ namespace StudentInsight
             // Repositories - Configs
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+            builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
             builder.Services.AddScoped<IExamRepository, ExamRepository>();
             builder.Services.AddScoped<IStudentExamLogsRepository, StudentExamLogsRepository>();
 
             // Services - Configs
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddScoped<ISubjectService, SubjectService>();
             builder.Services.AddScoped<IExamService, ExamService>();
             builder.Services.AddScoped<IStudentExamLogsService, StudentExamLogsService>();
 
