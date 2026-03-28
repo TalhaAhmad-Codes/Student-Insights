@@ -1,4 +1,4 @@
-﻿namespace StudentInsight.Models.Common
+﻿namespace StudentInsight.Models.Common.Response
 {
     public abstract class BaseResponse
     {

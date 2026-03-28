@@ -1,5 +1,6 @@
 ﻿using StudentInsight.Helpers;
-using StudentInsight.Models.Authentication;
+using StudentInsight.Models.Authentication.Request;
+using StudentInsight.Models.Authentication.Response;
 using StudentInsight.Routes;
 using StudentInsight.Services;
 using System.Windows;

@@ -1,8 +1,8 @@
 ﻿namespace StudentInsight.Routes
 {
-    public static class DepartmentRoute
+    public static class SubjectRoute
     {
-        public static string Endpoint => "Department";
+        public static string Endpoint => "Subject";
 
         public static class Get
         {

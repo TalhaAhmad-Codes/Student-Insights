@@ -1,6 +1,6 @@
-﻿using StudentInsight.Models.Common;
+﻿using StudentInsight.Models.Common.Response;
 
-namespace StudentInsight.Models.Users
+namespace StudentInsight.Models.Users.Response
 {
     public sealed class UserResponse : BaseResponse
     {

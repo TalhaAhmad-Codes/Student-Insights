@@ -1,4 +1,4 @@
-﻿using StudentInsight.Models.Users;
+﻿using StudentInsight.Models.Users.Response;
 using StudentInsight.Routes;
 using StudentInsight.Services;
 using System.ComponentModel;

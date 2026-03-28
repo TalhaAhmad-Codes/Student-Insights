@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace StudentInsight.Views.Departments
+namespace StudentInsight.Views.Subjects
 {
     /// <summary>
-    /// Interaction logic for ManageDepartmentsView.xaml
+    /// Interaction logic for ManageSubjectsView.xaml
     /// </summary>
-    public partial class ManageDepartmentsView : UserControl
+    public partial class ManageSubjectsView : UserControl
     {
-        public ManageDepartmentsView()
+        public ManageSubjectsView()
         {
             InitializeComponent();
         }

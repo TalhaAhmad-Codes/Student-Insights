@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="StudentInsight.Views.Department.ManageDepartmentsView"
+﻿<UserControl x:Class="StudentInsight.Views.Subjects.ManageSubjectsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Background="#F9FAFB"
@@ -24,7 +24,7 @@
         <!-- ==================================== CONTENT ==================================== -->
 
         <!-- Title -->
-        <TextBlock Text="Manage Departments"
+        <TextBlock Text="Manage Subjects"
                    FontSize="26"
                    FontWeight="Bold"
                    FontFamily="Segoe UI"
@@ -42,36 +42,36 @@
 
                 <TextBox Width="150"
                          Margin="5"
-                         Text="Department Name"/>
+                         Text="Subject Name"/>
 
                 <!-- Buttons -->
 
-                <Button Content="➕ Add Department"
+                <Button Content="➕ Add Subject"
                         Background="DeepSkyBlue"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command="{Binding AddDepartment}"
+                        Command="{Binding AddSubject}"
                         Margin="5"/>
 
-                <Button Content="🔼 Update Department"
+                <Button Content="🔼 Update Subject"
                         Background="Orange"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command="{Binding UpdateDepartment}"
+                        Command="{Binding UpdateSubject}"
                         Margin="5"/>
 
-                <Button Content="❌ Delete Department"
+                <Button Content="❌ Delete Subject"
                         Background="OrangeRed"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command="{Binding DeleteDepartment}"
+                        Command="{Binding DeleteSubject}"
                         Margin="5"/>
 
-                <Button Content="⧩ Filter Students"
+                <Button Content="⧩ Filter Subjects"
                         Background="PaleGreen"
                         Foreground="Black"
                         Padding="5,2,5,2"
-                        Command="{Binding FilterDepartments}"
+                        Command="{Binding FilterSubjects}"
                         Margin="5"/>
 
             </StackPanel>
@@ -88,10 +88,7 @@
                 <!-- Data Columns -->
                 <DataGrid.Columns>
 
-                    <DataGridTemplateColumn Header="Department Name"
-                                            Width="*"/>
-                    
-                    <DataGridTemplateColumn Header="Total Students"
+                    <DataGridTemplateColumn Header="Name"
                                             Width="*"/>
 
                 </DataGrid.Columns>

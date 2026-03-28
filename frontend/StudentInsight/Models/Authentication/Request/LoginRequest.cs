@@ -1,4 +1,4 @@
-﻿namespace StudentInsight.Models.Authentication
+﻿namespace StudentInsight.Models.Authentication.Request
 {
     public class LoginRequest
     {
