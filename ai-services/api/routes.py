@@ -60,41 +60,41 @@ class User:
         def by_id(_id: UUID) -> str:
             return f"{User.ENDPOINT}/{_id}"
 
-# ********** Department - Endpoints ********** #
-class Department:
-    ENDPOINT: str = f"Department"
+# ********** Subject - Endpoints ********** #
+class Subject:
+    ENDPOINT: str = f"Subject"
 
     # GET
     class Get:
         @staticmethod
         def all() -> str:
-            return f"{Department.ENDPOINT}"
+            return f"{Subject.ENDPOINT}"
 
         @staticmethod
         def by_id(_id: UUID | str) -> str:
-            return f"{Department.ENDPOINT}/{_id}"
+            return f"{Subject.ENDPOINT}/{_id}"
 
     # POST
     class Post:
         @staticmethod
         def create() -> str:
-            return f"{Department.ENDPOINT}"
+            return f"{Subject.ENDPOINT}"
 
         @staticmethod
         def create_bulk() -> str:
-            return f"{Department.ENDPOINT}/bulk"
+            return f"{Subject.ENDPOINT}/bulk"
 
     # PUT
     class Put:
         @staticmethod
         def update() -> str:
-            return f"{Department.ENDPOINT}"
+            return f"{Subject.ENDPOINT}"
 
     # DELETE
     class Delete:
         @staticmethod
         def by_id(_id: UUID) -> str:
-            return f"{Department.ENDPOINT}/{_id}"
+            return f"{Subject.ENDPOINT}/{_id}"
 
 # ********** Student - Endpoints ********** #
 class Student:

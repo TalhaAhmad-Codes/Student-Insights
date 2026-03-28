@@ -1,11 +1,13 @@
-from api.schemas.department import DepartmentCreateDTO
+from api.schemas.student_exam_logs import StudentExamLogsCreateDTO
+from api.schemas.subject import SubjectCreateDTO
+from api.schemas.student import StudentCreateDTO
+from misc.enums import ExamType, ExamStatus
 from api.schemas.exam import ExamCreateDTO
 from api.schemas.user import UserCreateDTO
-from api.schemas.student import StudentCreateDTO
-from misc.enums import ExamType
-from random import randint
+from generators.values import subject
 from faker import Faker
 from uuid import UUID
+import random as rd
 
 fk = Faker()
 
@@ -20,31 +22,54 @@ class Generator:
         )
 
     @staticmethod
-    def student(user_id: UUID | str, department_id: UUID | str) -> StudentCreateDTO:
+    def student(user_id: UUID | str) -> StudentCreateDTO:
         return StudentCreateDTO(
             creatorUserId=user_id,
-            departmentId=department_id,
-            studentName=fk.full_name(short=True),
-            fatherName=fk.full_name(gender='M', short=True),
+            studentName=fk.first_name(),
             rollNumber=fk.random_number(digits=4, fix_len=True),
             dateOfBirth=fk.date_of_birth(minimum_age=18, maximum_age=26)
         )
 
     @staticmethod
-    def department(user_id: UUID, name: str) -> DepartmentCreateDTO:
-        return DepartmentCreateDTO(
+    def department(user_id: UUID | str, name: str | None = None) -> SubjectCreateDTO:
+        return SubjectCreateDTO(
             creatorUserId=user_id,
-            name=name
+            name=name if name is not None else Func.random_subject()
         )
 
     @staticmethod
-    def exam(user_id: UUID, department_id: UUID) -> ExamCreateDTO:
-        type: ExamType = [ExamType.SESSIONAL, ExamType.MID, ExamType.FINAL][randint(0, 2)]
+    def exam(user_id: UUID | str, subject_id: UUID | str) -> ExamCreateDTO:
+        type: ExamType = [ExamType.SESSIONAL, ExamType.MID, ExamType.FINAL][rd.randint(0, 2)]
         marks: int = 100 if type is ExamType.FINAL else 40 if type is ExamType.MID else 25
         return ExamCreateDTO(
             creatorUserId=user_id,
-            departmentId=department_id,
+            subjectId=subject_id,
             type=type,
             totalMarks=marks,
             conductedDate=fk.date()
         )
+
+    @staticmethod
+    def exam_log(user_id: UUID | str, student_id: UUID | str, exam_id: UUID | str, total_marks: int, note: str | None = None) -> StudentExamLogsCreateDTO:
+        obtainedMarks: int = rd.randint(0, total_marks)
+        percentage: int = int((obtainedMarks / total_marks) * 100)
+        status: ExamStatus = ExamStatus.FAIL if percentage < 50 else ExamStatus.PASS
+
+        return StudentExamLogsCreateDTO(
+            studentId=student_id,
+            examId=exam_id,
+            creatorUserId=user_id,
+            obtainedMarks=obtainedMarks,
+            status=status,
+            note=note
+        )
+
+class Func:
+    @staticmethod
+    def random_subject():
+        prefix: str = rd.choice(subject['prefix'])
+        core: str = rd.choice(subject['core'])
+
+        suffix = rd.choice(["II", "Techniques", "Applications"]) if prefix in ["Advanced", "Applied"] else rd.choice(subject['suffix'])
+
+        return f'{prefix} {core} {suffix}'

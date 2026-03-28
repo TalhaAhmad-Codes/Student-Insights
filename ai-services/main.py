@@ -1,10 +1,14 @@
-from api.services.user_service import UserService
+from generators.generator import Generator
+from rich import print as display
+from uuid import uuid4
 
 if __name__ == '__main__':
     try:
-        dtos = UserService.get_all()
-        for dto in dtos:
-            print(dto.username, dto.email, sep=' --- ')
+        dto = Generator.student(
+            user_id=uuid4()
+        )
+        display(dto)
+        print(dto)
     except Exception as e:
         print("Error:", f"{e}", sep='\n')
 
