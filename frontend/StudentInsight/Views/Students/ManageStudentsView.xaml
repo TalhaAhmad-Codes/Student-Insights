@@ -46,31 +46,9 @@
 
                 <TextBox Width="150"
                          Margin="5"
-                         Text="Father Name"/>
-
-                <TextBox Width="150"
-                         Margin="5"
                          Text="Roll Number"/>
 
-                <ComboBox Width="150"
-                          Margin="5"
-                          Text="Department"
-                          ItemsSource="{Binding GetDepartments}"
-                          SelectedItem="{Binding SelectedDepartment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          DisplayMemberPath="Name"
-                          SelectedValuePath="Id">
-                </ComboBox>
-
-                <DatePicker Width="100"
-                            Margin="5"
-                            Text="Date of Birth" />
-
-            </StackPanel>
-            
-            <!-- Buttons -->
-            <StackPanel Orientation="Horizontal"
-                        Margin="0,0,0,10">
-
+                <!-- Buttons -->
                 <Button Content="➕ Add Student"
                         Background="DeepSkyBlue"
                         Foreground="Black"
@@ -113,9 +91,11 @@
                 <!-- Data Columns -->
                 <DataGrid.Columns>
 
-                    <DataGridTemplateColumn Header="Name"
+                    <DataGridTemplateColumn Header="Student Name"
                                             Width="*"/>
 
+                    <DataGridTemplateColumn Header="Roll Number"
+                                            Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

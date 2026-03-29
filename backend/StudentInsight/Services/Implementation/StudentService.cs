@@ -65,9 +65,7 @@ namespace StudentInsight.Services.Implementation
                 return false;
 
             student.StudentName = dto.StudentName;
-            student.FatherName = dto.FatherName;
             student.RollNumber = dto.RollNumber;
-            student.DateOfBirth = dto.DateOfBirth;
 
             await repository.UpdateAsync(student);
             return true;

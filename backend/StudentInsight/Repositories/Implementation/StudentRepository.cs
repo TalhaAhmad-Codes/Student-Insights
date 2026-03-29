@@ -24,9 +24,6 @@ namespace StudentInsight.Repositories.Implementation
             if (filterDto.ToRollNumber.HasValue)
                 query = query.Where(s => s.RollNumber <= filterDto.ToRollNumber);
 
-            if (filterDto.DateOfBirth.HasValue)
-                query = query.Where(s => s.DateOfBirth == filterDto.DateOfBirth);
-
             var items = await GetPagedResultItemsAsync(query.OrderBy(s => s.Id), filterDto.PageNumber, filterDto.PageSize);
             var totalCount = await query.CountAsync();
 

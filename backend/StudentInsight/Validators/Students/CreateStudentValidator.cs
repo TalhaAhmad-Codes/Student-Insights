@@ -15,16 +15,8 @@ namespace StudentInsight.Validators.Students
                 .NotEmpty()
                 .MaximumLength(MaxLength.PersonName);
 
-            RuleFor(s => s.FatherName)
-                .NotEmpty()
-                .MaximumLength(MaxLength.PersonName);
-
             RuleFor(s => s.RollNumber)
                 .GreaterThan(0);
-
-            RuleFor(s => s.DateOfBirth)
-                .LessThanOrEqualTo(DateOnly.FromDateTime(DateTime.UtcNow))
-                .WithMessage("Date of birth cannot be in the future.");
         }
     }
 }

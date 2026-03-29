@@ -6,6 +6,5 @@ namespace StudentInsight.Models.Students.Request
     {
         public int? FromRollNumber { get; init; }
         public int? ToRollNumber { get; init; }
-        public DateOnly? DateOfBirth { get; init; }
     }
 }

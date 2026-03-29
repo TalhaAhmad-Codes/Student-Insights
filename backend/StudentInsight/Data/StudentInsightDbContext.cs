@@ -55,12 +55,6 @@ namespace StudentInsight.Data
                        .HasMaxLength(MaxLength.PersonName)
                        .HasColumnName("Name");
 
-                // Father Name
-                builder.Property(s => s.FatherName)
-                       .IsRequired()
-                       .HasMaxLength(MaxLength.PersonName)
-                       .HasColumnName("FatherName");
-
                 // Roll Number
                 builder.Property(s => s.RollNumber)
                        .IsRequired()
@@ -68,11 +62,6 @@ namespace StudentInsight.Data
 
                 builder.HasIndex(s => s.RollNumber)
                        .IsUnique();
-
-                // Date of Birth
-                builder.Property(s => s.DateOfBirth)
-                       .IsRequired()
-                       .HasColumnName("DOB");
 
                 /* ----- Relations ----- */
 
