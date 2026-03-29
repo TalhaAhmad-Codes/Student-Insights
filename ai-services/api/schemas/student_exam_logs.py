@@ -1,6 +1,7 @@
-from api.schemas.common.base import BaseDTO, BaseCreatorResponseDTO, BaseCreatorCreateDTO, UUID
+from api.schemas.common.base import BaseDTO, BaseCreatorResponseDTO, UUID
 from api.schemas.common.filter import BaseCreatorFilterDTO
 from misc.enums import ExamType, ExamStatus
+from pydantic import BaseModel
 from datetime import date
 
 # Student Exam Logs - To get response
@@ -24,7 +25,8 @@ class StudentExamLogsDetailedResponseDTO(StudentExamLogsResponseDTO):
     dateOfConduct: date
 
 # Student Exam Logs - To create
-class StudentExamLogsCreateDTO(BaseCreatorCreateDTO):
+class StudentExamLogsCreateDTO(BaseModel):
+    creatorUserId: UUID | str
     obtainedMarks: int
     note: str | None
     status: ExamStatus
