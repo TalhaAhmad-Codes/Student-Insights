@@ -1,16 +1,12 @@
-from generators.generator import Generator
-from rich import print as display
-from uuid import uuid4
+from generators.seeder import Seeder
 
 if __name__ == '__main__':
     try:
-        dto = Generator.student(
-            user_id=uuid4()
-        )
-        display(dto)
-        print(dto)
+        count: int = 26928
+        Seeder.subjects('AE19B944-4B9C-4338-86D4-1A70016B701F', count)
+
     except Exception as e:
-        print("Error:", f"{e}", sep='\n')
+        print("\nError:", f"{e}", sep='\n')
 
 """
 import argparse as ap

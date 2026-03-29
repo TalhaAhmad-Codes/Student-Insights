@@ -31,7 +31,7 @@ class Generator:
         )
 
     @staticmethod
-    def department(user_id: UUID | str, name: str | None = None) -> SubjectCreateDTO:
+    def subject(user_id: UUID | str, name: str | None = None) -> SubjectCreateDTO:
         return SubjectCreateDTO(
             creatorUserId=user_id,
             name=name if name is not None else Func.random_subject()
@@ -40,7 +40,8 @@ class Generator:
     @staticmethod
     def exam(user_id: UUID | str, subject_id: UUID | str) -> ExamCreateDTO:
         type: ExamType = [ExamType.SESSIONAL, ExamType.MID, ExamType.FINAL][rd.randint(0, 2)]
-        marks: int = 100 if type is ExamType.FINAL else 40 if type is ExamType.MID else 25
+        marks: int = 100 if type is ExamType.FINAL else 50 if type is ExamType.MID else 25
+
         return ExamCreateDTO(
             creatorUserId=user_id,
             subjectId=subject_id,
@@ -66,10 +67,15 @@ class Generator:
 
 class Func:
     @staticmethod
-    def random_subject():
+    def random_subject() -> str:
         prefix: str = rd.choice(subject['prefix'])
         core: str = rd.choice(subject['core'])
 
         suffix = rd.choice(["II", "Techniques", "Applications"]) if prefix in ["Advanced", "Applied"] else rd.choice(subject['suffix'])
 
         return f'{prefix} {core} {suffix}'
+
+    @staticmethod
+    def unique_subjects_limit() -> int:
+        # Current: 26,928
+        return len(subject['prefix']) * len(subject['core']) * len(subject['suffix'])

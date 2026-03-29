@@ -37,7 +37,10 @@ class ApiClient:
         data = self._serialize(data)
         res = requests.post(self._url(endpoint), json=data)
         self._handle(res)
-        return res.json()
+        try:
+            return res.json()
+        except:
+            return res.text
 
     def put(self, endpoint: str, data):
         data = self._serialize(data)
