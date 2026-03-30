@@ -13,12 +13,16 @@ fk = Faker()
 
 class Generator:
     @staticmethod
-    def user(profile_pic = None) -> UserCreateDTO:
+    def user(**kwargs) -> UserCreateDTO:
+        profile_pic = kwargs.get('profile_pic', None)
+        domain: str = kwargs.get('email', 'gmail.com')
+        password: str | None = kwargs.get('password', None)
+
         return UserCreateDTO(
             profilePic=profile_pic,
             username=fk.user_name(),
-            email=fk.email(domain='gmail.com'),
-            password='12345678'
+            email=fk.email(domain=domain),
+            password=password if password is not None else fk.password(length=8, digits=True, lower_case=True)
         )
 
     @staticmethod
